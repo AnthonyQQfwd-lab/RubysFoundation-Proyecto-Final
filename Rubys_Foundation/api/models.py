@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 """
@@ -119,11 +119,10 @@ class Publications (models.Model):
 La tabla MediaPets almacena todos los archivos que son de una mascota 
 """
 
-class MediaPets (models.Model):
-    imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
-    video = models.FileField(upload_to='videos/', null=True, blank=True)
+class MediaPets(models.Model):
+    imagen = CloudinaryField('image', folder='mediapets/images/', null=True, blank=True)
+    video = CloudinaryField('video', folder='mediapets/videos/', null=True, blank=True)
     pet = models.ForeignKey(Pets, on_delete=models.CASCADE)
-
     
 """
 La tabla de ReportGrade almacena los grados de reporte que hay
@@ -157,5 +156,39 @@ class Reports (models.Model):
     reporterUser = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_reporter')
     moderator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_moderator')
     administrator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_admin')
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Notes (models.Model):
+    review = models.CharField(max_length=250)
+    reviewer = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='reviewer')
+    reviewee = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='reviewee')
+
+class Chats (models.Model):
+    about = models.CharField(max_length=250)
+
+class Messages (models.Model):
+    message = models.CharField(max_length=1000)
+    date = models.DateTimeField(default=timezone.now)
+    answerTo = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='replies')
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True)
+    chat = models.ForeignKey(Chats, on_delete=models.CASCADE, blank=True, null=True)
+
+class MediaMessages(models.Model):
+    imagen = CloudinaryField('image', folder='messagemedia/imagenes/', null=True, blank=True)
+    video = CloudinaryField('video', folder='messagemedia/videos/', null=True, blank=True, resource_type='video')
+    message = models.ForeignKey(Messages, on_delete=models.CASCADE)
+
+class ChatsUsersPets (models.Model):
+    member1 = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='member1')
+    member2 = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='member2')
+    pet = models.ForeignKey(Pets, on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chats, on_delete=models.CASCADE)
+
+class ChatsUsersModerators (models.Model):
+    member1 = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='User')
+    member2 = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='Moderator')
+    chat = models.ForeignKey(Chats, on_delete=models.CASCADE)
+
 
 

@@ -12,7 +12,13 @@ from .models import (
     Publications,
     MediaPets,
     ReportsGrade,
-    Reports)
+    Reports,
+    Notes,
+    Chats,
+    Messages,
+    MediaMessages,
+    ChatsUsersPets,
+    ChatsUsersModerators)
 
 from .serializers import (
     UsersSerializers,
@@ -26,7 +32,13 @@ from .serializers import (
     PublicationsSerializers,
     MediaPetsSerializers,
     ReportsGradeSerializers,
-    ReportsSerializers)
+    ReportsSerializers,
+    NotesSerializers,
+    ChatsSerializers,
+    MessagesSerializers,
+    MediaMessagesSerializers,
+    ChatsUsersPetsSerializers,
+    ChatsUsersModeratorsSerializers)
 # Create your views here.
 
 # Users
@@ -147,3 +159,63 @@ class ReportsListCreateView(generics.ListCreateAPIView):
 class ReportsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Reports.objects.all()
     serializer_class = ReportsSerializers
+
+
+#Notes
+class NotesListCreateView(generics.ListCreateAPIView):
+    queryset = Notes.objects.all()
+    serializer_class = NotesSerializers
+
+class NotesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Notes.objects.all()
+    serializer_class = NotesSerializers
+
+
+#Chats
+class ChatsListCreateView(generics.ListCreateAPIView):
+    queryset = Chats.objects.all()
+    serializer_class = ChatsSerializers
+
+class ChatsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Chats.objects.all()
+    serializer_class = ChatsSerializers
+
+
+#Messages
+class MessagesListCreateView(generics.ListCreateAPIView):
+    queryset = Messages.objects.all()
+    serializer_class = MessagesSerializers
+
+class MessagesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Messages.objects.all()
+    serializer_class = MessagesSerializers
+
+
+#MediaMessages
+class MediaMessagesListCreateView(generics.ListCreateAPIView):
+    queryset = MediaMessages.objects.all()
+    serializer_class = MediaMessagesSerializers
+
+class MediaMessagesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MediaMessages.objects.all()
+    serializer_class = MediaMessagesSerializers
+
+
+#ChatsUsersPets
+class ChatsUsersPetsListCreateView(generics.ListCreateAPIView):
+    queryset = ChatsUsersPets.objects.all()
+    serializer_class = ChatsUsersPetsSerializers
+
+class ChatsUsersPetsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ChatsUsersPets.objects.all()
+    serializer_class = ChatsUsersPetsSerializers
+
+
+#ChatsUsersModerators
+class ChatsUsersModeratorsListCreateView(generics.ListCreateAPIView):
+    queryset = ChatsUsersModerators.objects.all()
+    serializer_class = ChatsUsersModeratorsSerializers
+
+class ChatsUsersModeratorsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ChatsUsersModerators.objects.all()
+    serializer_class = ChatsUsersModeratorsSerializers

@@ -34,7 +34,25 @@ from .views import (
     ReportsGradeRetrieveUpdateDestroyView,
     
     ReportsListCreateView,
-    ReportsRetrieveUpdateDestroyView)
+    ReportsRetrieveUpdateDestroyView,
+    
+    NotesListCreateView,
+    NotesRetrieveUpdateDestroyView,
+    
+    ChatsListCreateView,
+    ChatsRetrieveUpdateDestroyView,
+    
+    MessagesListCreateView,
+    MessagesRetrieveUpdateDestroyView,
+    
+    MediaMessagesListCreateView,
+    MediaMessagesRetrieveUpdateDestroyView,
+    
+    ChatsUsersPetsListCreateView,
+    ChatsUsersPetsRetrieveUpdateDestroyView,
+    
+    ChatsUsersModeratorsListCreateView,
+    ChatsUsersModeratorsRetrieveUpdateDestroyView)
 
 urlpatterns = [
     #Users
@@ -66,8 +84,8 @@ urlpatterns = [
     path('breeds/<int:pk>/', BreedsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Breeds"),
 
     #Pets
-    path('Pets/', PetsListCreateView.as_view(), name="Get and Post Pets"),
-    path('Pets/<int:pk>/', PetsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Pets"),
+    path('pets/', PetsListCreateView.as_view(), name="Get and Post Pets"),
+    path('pets/<int:pk>/', PetsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Pets"),
 
     #Publications
     path('publications/', PublicationsListCreateView.as_view(), name="Get and Post publications"),
@@ -84,4 +102,28 @@ urlpatterns = [
     #Reports
     path('reports/', ReportsListCreateView.as_view(), name="Get and Post reports"),
     path('reports/<int:pk>/', ReportsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  reports"),
+
+    #Notes
+    path('notes/', NotesListCreateView.as_view(), name="Get and Post notes"),
+    path('notes/<int:pk>/', NotesRetrieveUpdateDestroyView.as_view(), name="Put delete byid  notes"),
+
+    #Chats
+    path('chats/', ChatsListCreateView.as_view(), name="Get and Post chats"),
+    path('chats/<int:pk>/', ChatsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  chats"),
+
+    #Messages
+    path('messages/', MessagesListCreateView.as_view(), name="Get and Post messages"),
+    path('messages/<int:pk>/', MessagesRetrieveUpdateDestroyView.as_view(), name="Put delete byid  messages"),
+
+    #MediaMessages
+    path('mediamessages/', MediaMessagesListCreateView.as_view(), name="Get and Post mediamessages"),
+    path('mediamessages/<int:pk>/', MediaMessagesRetrieveUpdateDestroyView.as_view(), name="Put delete byid  mediamessages"),
+
+    #ChatsUsersPets
+    path('chatsuserspets/', ChatsUsersPetsListCreateView.as_view(), name="Get and Post chatsuserspets"),
+    path('chatsuserspets/<int:pk>/', ChatsUsersPetsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  chatsuserspets"),
+
+    #ChatsUsersModerators
+    path('chatsusersmoderators/', ChatsUsersModeratorsListCreateView.as_view(), name="Get and Post chatsusersmoderators"),
+    path('chatsusersmoderators/<int:pk>/', ChatsUsersModeratorsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  chatsusersmoderators"),
 ]

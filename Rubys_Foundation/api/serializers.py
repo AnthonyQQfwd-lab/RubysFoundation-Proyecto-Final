@@ -12,7 +12,13 @@ from .models import (
     Publications,
     MediaPets,
     ReportsGrade,
-    Reports)
+    Reports,
+    Notes,
+    Chats,
+    Messages,
+    MediaMessages,
+    ChatsUsersPets,
+    ChatsUsersModerators)
 
 #Users
 class UsersSerializers(serializers.ModelSerializer):
@@ -79,9 +85,17 @@ class PublicationsSerializers(serializers.ModelSerializer):
 
 #MediaPets
 class MediaPetsSerializers(serializers.ModelSerializer):
+    imagen = serializers.ImageField(required=False, allow_null=True)
+    video = serializers.FileField(required=False, allow_null=True)
+    
     class Meta:
         model = MediaPets
-        fields = "__all__"
+        fields = ['id', 'imagen', 'video', 'pet']
+    
+    def validate(self, data):
+        if not data.get('imagen') and not data.get('video'):
+            raise serializers.ValidationError("Debe proporcionar al menos una imagen o un video")
+        return data
 
 #ReportsGrade
 class ReportsGradeSerializers(serializers.ModelSerializer):
@@ -93,4 +107,40 @@ class ReportsGradeSerializers(serializers.ModelSerializer):
 class ReportsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Reports
+        fields = "__all__"
+
+#Notes
+class NotesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Notes
+        fields = "__all__"
+
+#Chats
+class ChatsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Chats
+        fields = "__all__"
+
+#Messages
+class MessagesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Messages
+        fields = "__all__"
+
+#MediaMessages
+class MediaMessagesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = MediaMessages
+        fields = "__all__"
+
+#ChatsUsersPets
+class ChatsUsersPetsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ChatsUsersPets
+        fields = "__all__"
+
+#ChatsUsersModerators
+class ChatsUsersModeratorsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ChatsUsersModerators
         fields = "__all__"
