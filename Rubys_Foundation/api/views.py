@@ -1,7 +1,32 @@
 from django.shortcuts import render
-from .models import Users, UsersType, TicketsStatus, Tickets, AuditTickets, Species
 from rest_framework import generics
-from .serializers import UsersSerializers, UsersTypeSerializers, TicketsStatusSerializers, TicketsSerializers, AuditTicketsSerializers, SpeciesSerializers
+from .models import (
+    Users, 
+    UsersType, 
+    TicketsStatus, 
+    Tickets, 
+    AuditTickets, 
+    Species, 
+    Breeds,
+    Pets,
+    Publications,
+    MediaPets,
+    ReportsGrade,
+    Reports)
+
+from .serializers import (
+    UsersSerializers,
+    UsersTypeSerializers,
+    TicketsStatusSerializers, 
+    TicketsSerializers, 
+    AuditTicketsSerializers, 
+    SpeciesSerializers,
+    BreedsSerializers,
+    PetsSerializers,
+    PublicationsSerializers,
+    MediaPetsSerializers,
+    ReportsGradeSerializers,
+    ReportsSerializers)
 # Create your views here.
 
 # Users
@@ -62,3 +87,63 @@ class SpeciesListCreateView(generics.ListCreateAPIView):
 class SpeciesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Species.objects.all()
     serializer_class = SpeciesSerializers
+
+
+# Breeds
+class BreedsListCreateView(generics.ListCreateAPIView):
+    queryset = Breeds.objects.all()
+    serializer_class = BreedsSerializers
+
+class BreedsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Breeds.objects.all()
+    serializer_class = BreedsSerializers
+
+
+# Pets
+class PetsListCreateView(generics.ListCreateAPIView):
+    queryset = Pets.objects.all()
+    serializer_class = PetsSerializers
+
+class PetsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Pets.objects.all()
+    serializer_class = PetsSerializers
+
+
+#Publications
+class PublicationsListCreateView(generics.ListCreateAPIView):
+    queryset = Publications.objects.all()
+    serializer_class = PublicationsSerializers
+
+class PublicationsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Publications.objects.all()
+    serializer_class = PublicationsSerializers
+
+
+#MediaPets
+class MediaPetsListCreateView(generics.ListCreateAPIView):
+    queryset = MediaPets.objects.all()
+    serializer_class = MediaPetsSerializers
+
+class MediaPetsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MediaPets.objects.all()
+    serializer_class = PublicationsSerializers
+
+
+#ReportsGrade
+class ReportsGradeListCreateView(generics.ListCreateAPIView):
+    queryset = ReportsGrade.objects.all()
+    serializer_class = ReportsGradeSerializers
+
+class ReportsGradeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ReportsGrade.objects.all()
+    serializer_class = ReportsGradeSerializers
+
+
+#Reports
+class ReportsListCreateView(generics.ListCreateAPIView):
+    queryset = Reports.objects.all()
+    serializer_class = ReportsSerializers
+
+class ReportsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Reports.objects.all()
+    serializer_class = ReportsSerializers

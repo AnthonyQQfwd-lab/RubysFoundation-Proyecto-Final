@@ -139,7 +139,7 @@ reportado sera sancionado como lo dicto el administrador.
 4 descricion: los reporte grado 4 son los reporte que pasaron por el moderador pero el administrador concidero que el reporte no esta justificado, 
 entonces no se tomaran medidas  
 """
-class ReportGrade (models.Model):
+class ReportsGrade (models.Model):
     description = models.CharField(max_length=100)
 
 """
@@ -152,7 +152,7 @@ class Reports (models.Model):
     moderatorDescription = models.CharField(max_length=500, blank=True, null= True)
     adminDescription = models.CharField(max_length=500, blank=True, null= True)
     dateReport = models.DateField(default=timezone.now)
-    reportGrade = models.ForeignKey(ReportGrade, on_delete=models.CASCADE, blank=True, null= True)
+    reportGrade = models.ForeignKey(ReportsGrade, on_delete=models.CASCADE, blank=True, null= True)
     reportedUser = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='reports_as_reported')
     reporterUser = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_reporter')
     moderator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_moderator')
