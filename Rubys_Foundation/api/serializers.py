@@ -9,6 +9,7 @@ from .models import (
     Species, 
     Breeds, 
     Pets,
+    HappyPets,
     Publications,
     MediaPets,
     ReportsGrade,
@@ -75,6 +76,12 @@ class BreedsSerializers(serializers.ModelSerializer):
 class PetsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Pets
+        fields = "__all__"
+
+#HappyPets
+class HappyPetsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = HappyPets
         fields = "__all__"
 
 #Publications

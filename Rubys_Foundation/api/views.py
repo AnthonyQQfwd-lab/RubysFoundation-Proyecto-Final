@@ -18,7 +18,8 @@ from .models import (
     Messages,
     MediaMessages,
     ChatsUsersPets,
-    ChatsUsersModerators)
+    ChatsUsersModerators,
+    HappyPets)
 
 from .serializers import (
     UsersSerializers,
@@ -38,7 +39,8 @@ from .serializers import (
     MessagesSerializers,
     MediaMessagesSerializers,
     ChatsUsersPetsSerializers,
-    ChatsUsersModeratorsSerializers)
+    ChatsUsersModeratorsSerializers,
+    HappyPetsSerializers)
 # Create your views here.
 
 # Users
@@ -219,3 +221,14 @@ class ChatsUsersModeratorsListCreateView(generics.ListCreateAPIView):
 class ChatsUsersModeratorsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ChatsUsersModerators.objects.all()
     serializer_class = ChatsUsersModeratorsSerializers
+
+
+#HappyPets
+class HappyPetsListCreateView(generics.ListCreateAPIView):
+    queryset = HappyPets.objects.all()
+    serializer_class = HappyPetsSerializers
+
+class HappyPetsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HappyPets.objects.all()
+    serializer_class = HappyPetsSerializers
+

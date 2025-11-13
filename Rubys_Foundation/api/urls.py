@@ -52,7 +52,10 @@ from .views import (
     ChatsUsersPetsRetrieveUpdateDestroyView,
     
     ChatsUsersModeratorsListCreateView,
-    ChatsUsersModeratorsRetrieveUpdateDestroyView)
+    ChatsUsersModeratorsRetrieveUpdateDestroyView,
+    
+    HappyPetsListCreateView,
+    HappyPetsRetrieveUpdateDestroyView)
 
 urlpatterns = [
     #Users
@@ -126,4 +129,8 @@ urlpatterns = [
     #ChatsUsersModerators
     path('chatsusersmoderators/', ChatsUsersModeratorsListCreateView.as_view(), name="Get and Post chatsusersmoderators"),
     path('chatsusersmoderators/<int:pk>/', ChatsUsersModeratorsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  chatsusersmoderators"),
+
+    #HappyPets
+    path('happypets/', HappyPetsListCreateView.as_view(), name="Get and Post happypets"),
+    path('happypets/<int:pk>/', HappyPetsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  happypets"),
 ]

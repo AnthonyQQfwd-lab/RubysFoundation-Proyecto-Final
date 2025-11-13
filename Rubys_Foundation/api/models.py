@@ -106,6 +106,16 @@ class Pets (models.Model):
     breed = models.ForeignKey(Breeds, on_delete=models.CASCADE)
 
 """
+La clase HappyPets es la tabla que almacena a todas las mascotas que han sido adoptadas o restacada 
+"""
+
+class HappyPets (models.Model):
+    date = models.DateField(default=timezone.now)
+    pet = models.ForeignKey(Pets, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Users, on_delete=models.CASCADE)
+
+
+"""
 Laa tabla Publications almacenara todas las publicaciones de un usuario 
 """
 
@@ -144,7 +154,6 @@ class ReportsGrade (models.Model):
 """
 La tabla Reports almacenara los reportes hechos por los usuarios hacia publicaciones o usuarios 
 """
-
 class Reports (models.Model):
     problem = models.CharField(max_length=100)
     userDescription = models.CharField(max_length=500)
@@ -157,15 +166,24 @@ class Reports (models.Model):
     moderator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_moderator')
     administrator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_admin')
 
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+"""
+La tabla Notes se guardaran las notas y reviews que se le ha dado a un usuario 
+"""
 class Notes (models.Model):
     review = models.CharField(max_length=250)
     reviewer = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='reviewer')
     reviewee = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='reviewee')
 
+"""
+La tabla chats almacenara los chats que se tengan entre usuarios 
+"""
 class Chats (models.Model):
     about = models.CharField(max_length=250)
+
+"""
+La tabla mensaje almacenara todos los mensajes que van a un chat 
+"""
 
 class Messages (models.Model):
     message = models.CharField(max_length=1000)
@@ -174,16 +192,26 @@ class Messages (models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True)
     chat = models.ForeignKey(Chats, on_delete=models.CASCADE, blank=True, null=True)
 
+"""
+La tabla MediaMessage almacenara todos los archivos de un mensaje 
+"""
+
 class MediaMessages(models.Model):
     imagen = CloudinaryField('image', folder='messagemedia/imagenes/', null=True, blank=True)
     video = CloudinaryField('video', folder='messagemedia/videos/', null=True, blank=True, resource_type='video')
     message = models.ForeignKey(Messages, on_delete=models.CASCADE)
+
+"""
+tabla entermedia para comunicar los usuarios en los chats 
+"""
 
 class ChatsUsersPets (models.Model):
     member1 = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='member1')
     member2 = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='member2')
     pet = models.ForeignKey(Pets, on_delete=models.CASCADE)
     chat = models.ForeignKey(Chats, on_delete=models.CASCADE)
+
+#tabla entermedia para comunicar los usuarios en el chat con moderadores
 
 class ChatsUsersModerators (models.Model):
     member1 = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='User')
