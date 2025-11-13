@@ -3,9 +3,6 @@ from .views import (
     UsersListCreateView,
     UsersRetrieveUpdateDestroyView,
 
-    UsersTypeListCreateView,
-    UsersTypeRetrieveUpdateDestroyView,
-
     TicketsStatusListCreateView,
     TicketsStatusRetrieveUpdateDestroyView,
 
@@ -55,16 +52,15 @@ from .views import (
     ChatsUsersModeratorsRetrieveUpdateDestroyView,
     
     HappyPetsListCreateView,
-    HappyPetsRetrieveUpdateDestroyView)
+    HappyPetsRetrieveUpdateDestroyView,
+    
+    UserGroupListCreateView,
+    UserGroupsRetrieveUpdateDestroyView)
 
 urlpatterns = [
     #Users
     path('users/', UsersListCreateView.as_view(), name="Get and Post Users"),
     path('users/<int:pk>/', UsersRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Users"),
-
-    #Userstype
-    path('userstype/', UsersTypeListCreateView.as_view(), name="Get and Post UsersType"),
-    path('userstype/<int:pk>/', UsersTypeRetrieveUpdateDestroyView.as_view(), name="Put delete byid  UsersType"),
 
     #ticketsStatus
     path('ticketsstatus/', TicketsStatusListCreateView.as_view(), name="Get and Post TicketsStatus"),
@@ -133,4 +129,8 @@ urlpatterns = [
     #HappyPets
     path('happypets/', HappyPetsListCreateView.as_view(), name="Get and Post happypets"),
     path('happypets/<int:pk>/', HappyPetsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  happypets"),
+
+    #UserGroup
+    path('usergroup/', UserGroupListCreateView.as_view(), name="Get and Post usergroup"),
+    path('usergroup/<int:pk>/', UserGroupsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  usergroup"),
 ]

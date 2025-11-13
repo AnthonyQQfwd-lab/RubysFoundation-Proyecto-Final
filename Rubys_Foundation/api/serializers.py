@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User, Group
 from .models import (
     Users, 
-    UsersType, 
     TicketsStatus, 
     Tickets, 
     AuditTickets, 
@@ -21,6 +21,18 @@ from .models import (
     ChatsUsersPets,
     ChatsUsersModerators)
 
+UserGroup = User.groups.through
+
+class UserGroupSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = UserGroup
+        fields = "__all__"
+
+    def validate(self, data):
+            if UserGroup.objects.filter(user_id=data['user'], group_id=data['group']).exists():
+                raise serializers.ValidationError("Ya tiene ese grupo asignado.")
+            return data
+
 #Users
 class UsersSerializers(serializers.ModelSerializer):
     class Meta:
@@ -36,11 +48,7 @@ class UsersSerializers(serializers.ModelSerializer):
             validated_data['password'] = make_password(validated_data['password'])
         return super().create(validated_data)
 
-#UsersType
-class UsersTypeSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = UsersType
-        fields = "__all__"
+
 
 #TicketsStatus
 class TicketsStatusSerializers(serializers.ModelSerializer):

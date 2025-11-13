@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from cloudinary.models import CloudinaryField
+from django.contrib.auth.models import User
 # Create your models here.
 
 """
@@ -18,28 +19,21 @@ subiendolos de grado y mandandolos con el administrador a la vez que se oculta l
 Los administradores toman la decision final sobre un reprot, si concuerda que el report esta justificado
 el usuario reportado sera baneado, si no, simplemente la publicacion se volvera visible
 """
-class UsersType (models.Model):
-    role = models.CharField(max_length=20)
-    description = models.CharField(max_length=300)
+
 
 """
 Tabla Users, tabla encargada de almacenar a todos los usuarios, moderadores y administradores de la pagina web,
 con datos importantes como su ubicacion, parametros para iniciar sesion y a cuantas mascotas han adoptado y han ayudado 
 """
 class Users (models.Model):
-    name = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Users")
     phoneNumber = models.CharField(max_length=20)
-    password = models.CharField(max_length=255)
     country = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     petsHelped = models.IntegerField(default=0)
     petsAdopted = models.IntegerField(default=0)
-    email = models.EmailField(unique=True)
-    accountDate = models.DateField(default=timezone.now)
-    isBanned = models.BooleanField(default=False)
     isMember = models.BooleanField(default=False)
-    userType = models.ForeignKey(UsersType, on_delete=models.CASCADE)
 
 
     def __str__(self):

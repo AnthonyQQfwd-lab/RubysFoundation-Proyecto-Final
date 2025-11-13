@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
+from django.contrib.auth.models import User, Group
 from .models import (
     Users, 
-    UsersType, 
     TicketsStatus, 
     Tickets, 
     AuditTickets, 
@@ -19,11 +19,11 @@ from .models import (
     MediaMessages,
     ChatsUsersPets,
     ChatsUsersModerators,
-    HappyPets)
+    HappyPets,
+    )
 
 from .serializers import (
     UsersSerializers,
-    UsersTypeSerializers,
     TicketsStatusSerializers, 
     TicketsSerializers, 
     AuditTicketsSerializers, 
@@ -40,8 +40,21 @@ from .serializers import (
     MediaMessagesSerializers,
     ChatsUsersPetsSerializers,
     ChatsUsersModeratorsSerializers,
-    HappyPetsSerializers)
+    HappyPetsSerializers,
+    UserGroupSerializers)
 # Create your views here.
+
+UserGroup = User.groups.through
+
+class UserGroupListCreateView(generics.ListCreateAPIView):
+    queryset = UserGroup.objects.all()
+    serializer_class = UserGroupSerializers
+
+class UserGroupsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserGroup.objects.all()
+    serializer_class = UserGroupSerializers
+
+
 
 # Users
 class UsersListCreateView(generics.ListCreateAPIView):
@@ -52,15 +65,6 @@ class UsersRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Users.objects.all()
     serializer_class = UsersSerializers
 
-
-# UsersType
-class UsersTypeListCreateView(generics.ListCreateAPIView):
-    queryset = UsersType.objects.all()
-    serializer_class = UsersTypeSerializers
-
-class UsersTypeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UsersType.objects.all()
-    serializer_class = UsersTypeSerializers
 
 
 # TicketsStatus
