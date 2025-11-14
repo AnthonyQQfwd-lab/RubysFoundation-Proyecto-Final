@@ -41,7 +41,8 @@ from .serializers import (
     ChatsUsersPetsSerializers,
     ChatsUsersModeratorsSerializers,
     HappyPetsSerializers,
-    UserGroupSerializers)
+    UserGroupSerializers,
+    UserSerializers)
 # Create your views here.
 
 UserGroup = User.groups.through
@@ -65,7 +66,13 @@ class UsersRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Users.objects.all()
     serializer_class = UsersSerializers
 
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializers
 
+class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UserSerializers
 
 # TicketsStatus
 class TicketsStatusListCreateView(generics.ListCreateAPIView):

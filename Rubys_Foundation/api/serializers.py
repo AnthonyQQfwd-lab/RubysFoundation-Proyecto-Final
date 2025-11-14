@@ -38,6 +38,12 @@ class UsersSerializers(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = "__all__"
+
+class UserSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+        
         extra_kwargs = {
             'password': {'write_only': True}  
         }
@@ -47,8 +53,6 @@ class UsersSerializers(serializers.ModelSerializer):
         if 'password' in validated_data:
             validated_data['password'] = make_password(validated_data['password'])
         return super().create(validated_data)
-
-
 
 #TicketsStatus
 class TicketsStatusSerializers(serializers.ModelSerializer):

@@ -55,12 +55,19 @@ from .views import (
     HappyPetsRetrieveUpdateDestroyView,
     
     UserGroupListCreateView,
-    UserGroupsRetrieveUpdateDestroyView)
+    UserGroupsRetrieveUpdateDestroyView,
+    
+    UserListCreateView,
+    UserRetrieveUpdateDestroyView)
 
 urlpatterns = [
     #Users
     path('users/', UsersListCreateView.as_view(), name="Get and Post Users"),
     path('users/<int:pk>/', UsersRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Users"),
+
+    #UserD
+    path('usersd/', UserListCreateView.as_view(), name="Get and Post Users"),
+    path('usersd/<int:pk>/', UserRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Users"),
 
     #ticketsStatus
     path('ticketsstatus/', TicketsStatusListCreateView.as_view(), name="Get and Post TicketsStatus"),
