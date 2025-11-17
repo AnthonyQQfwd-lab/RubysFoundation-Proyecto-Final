@@ -19,29 +19,20 @@ from .models import (
     Messages,
     MediaMessages,
     ChatsUsersPets,
-    ChatsUsersModerators)
+    ChatsUsersModerators,
+    UserType)
 
-UserGroup = User.groups.through
-
-class UserGroupSerializers(serializers.ModelSerializer):
+#UserType
+class UserTypeSerializers(serializers.ModelSerializer):
     class Meta:
-        model = UserGroup
+        model = UserType
         fields = "__all__"
 
-    def validate(self, data):
-            if UserGroup.objects.filter(user_id=data['user'], group_id=data['group']).exists():
-                raise serializers.ValidationError("Ya tiene ese grupo asignado.")
-            return data
 
 #Users
 class UsersSerializers(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = "__all__"
-
-class UserSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = User
         fields = "__all__"
         
         extra_kwargs = {

@@ -20,22 +20,34 @@ Los administradores toman la decision final sobre un reprot, si concuerda que el
 el usuario reportado sera baneado, si no, simplemente la publicacion se volvera visible
 """
 
+class UserType (models.Model):
+    role = models.CharField(max_length=50)
+    description = models.CharField(max_length=300)
+
+
 
 """
 Tabla Users, tabla encargada de almacenar a todos los usuarios, moderadores y administradores de la pagina web,
 con datos importantes como su ubicacion, parametros para iniciar sesion y a cuantas mascotas han adoptado y han ayudado 
 """
 class Users (models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Users")
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
+    userName = models.CharField(max_length=20)
     phoneNumber = models.CharField(max_length=20)
     country = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50, unique=True)
+    password = models.CharField(max_length=256)
+
+
+
     petsHelped = models.IntegerField(default=0)
     petsAdopted = models.IntegerField(default=0)
     isMember = models.BooleanField(default=False)
-
-
+    dateJoined = models.DateField(default=timezone.now)
+    usertype = models.ForeignKey(UserType, on_delete=models.CASCADE)
     def __str__(self):
         return f" {self.name} - {self.userType.role}"
     
