@@ -68,8 +68,8 @@ urlpatterns = [
     path('users/<int:pk>/', UsersRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Users"),
 
     #UsersDjango
-    path('usersdjango/', UsersListCreateView.as_view(), name="Get and Post usersdjango"),
-    path('usersdjango/<int:pk>/', UsersRetrieveUpdateDestroyView.as_view(), name="Put delete byid  usersdjango"),
+    path('usersdjango/', UsersDjangoListCreateView.as_view(), name="Get and Post usersdjango"),
+    path('usersdjango/<int:pk>/', UsersDjangoRetrieveUpdateDestroyView.as_view(), name="Put delete byid  usersdjango"),
 
     #UserType
     path('usertype/', UserTypeListCreateView.as_view(), name="Get and Post usertype"),

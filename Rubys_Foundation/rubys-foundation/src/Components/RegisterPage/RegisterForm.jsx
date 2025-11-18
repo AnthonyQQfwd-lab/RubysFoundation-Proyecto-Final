@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { getUsers, createUsers } from '../../Services/ServicesUsers';
+import { getUsers, createUsers, createusersdjango } from '../../Services/ServicesUsers';
 
 
 function RegisterForm() {
@@ -58,7 +58,7 @@ function RegisterForm() {
         const newUser = {
             firstName: firstName,
             lastName: lastName,
-            userName: firstName + lastName.replace(/\s/g, ""),
+            username: firstName + lastName.replace(/\s/g, ""),
             phoneNumber: phoneNumber,
             country: country,
             state: state,
@@ -72,10 +72,22 @@ function RegisterForm() {
             usertype: 1
         };
 
+        const newUserD = {
+            first_name: firstName,
+            last_name: lastName,
+            username: firstName + lastName.replace(/\s/g, ""),
+            email: email,
+            password: password,
+            
+        };
+
         
         const user = await createUsers(newUser)
+        const userd = await createusersdjango(newUserD)
 
         console.log(user)
+        console.log(userd);
+        
     }
 
   return (

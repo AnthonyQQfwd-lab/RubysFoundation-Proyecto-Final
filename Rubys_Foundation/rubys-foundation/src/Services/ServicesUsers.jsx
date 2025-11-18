@@ -49,6 +49,32 @@ async function createUsers(newUser) {
     }
 }
 
+//(POST)
+async function createusersdjango(newUser) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/usersdjango/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error creating user");
+        }
+
+        const createUser = await peticion.json();
+
+
+        return createUser;
+
+    } catch (error) {
+        console.error("Error creating user", error);
+        throw error;
+    }
+}
+
 //(PUT || PATCH)
 async function updateUsers(id, updateData) {
     try {
@@ -92,4 +118,4 @@ async function deleteUsers(id) {
     }
 }
 
-export { getUsers, createUsers, updateUsers, deleteUsers};
+export { getUsers, createUsers, updateUsers, deleteUsers, createusersdjango};

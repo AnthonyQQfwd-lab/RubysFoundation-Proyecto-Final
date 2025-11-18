@@ -23,7 +23,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-AUTH_USER_MODEL = 'api_users'  
+#AUTH_USER_MODEL = 'api.Users'  # o no pongas nada si usas el modelo por defecto
 
 
 SIMPLE_JWT = {
