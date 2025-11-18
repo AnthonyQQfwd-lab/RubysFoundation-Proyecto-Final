@@ -23,6 +23,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+AUTH_USER_MODEL = 'api_users'  
 
 
 SIMPLE_JWT = {
