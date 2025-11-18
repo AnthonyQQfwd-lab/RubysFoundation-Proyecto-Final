@@ -55,12 +55,21 @@ from .views import (
     HappyPetsRetrieveUpdateDestroyView,
     
     UserTypeListCreateView,
-    UserTypeRetrieveUpdateDestroyView)
+    UserTypeRetrieveUpdateDestroyView,
+    
+    UsersDjangoListCreateView,
+    UsersDjangoRetrieveUpdateDestroyView)
+
+from rest_framework_simplejwt.views import(TokenObtainPairView,TokenRefreshView)
 
 urlpatterns = [
     #Users
     path('users/', UsersListCreateView.as_view(), name="Get and Post Users"),
     path('users/<int:pk>/', UsersRetrieveUpdateDestroyView.as_view(), name="Put delete byid  Users"),
+
+    #UsersDjango
+    path('usersdjango/', UsersListCreateView.as_view(), name="Get and Post usersdjango"),
+    path('usersdjango/<int:pk>/', UsersRetrieveUpdateDestroyView.as_view(), name="Put delete byid  usersdjango"),
 
     #UserType
     path('usertype/', UserTypeListCreateView.as_view(), name="Get and Post usertype"),
@@ -134,4 +143,6 @@ urlpatterns = [
     path('happypets/', HappyPetsListCreateView.as_view(), name="Get and Post happypets"),
     path('happypets/<int:pk>/', HappyPetsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  happypets"),
 
+    path('login/', TokenObtainPairView.as_view(),name='view-get-token'),
+    path('refresh/', TokenRefreshView.as_view(),name='view-refresh-token'),
 ]

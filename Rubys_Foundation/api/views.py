@@ -19,7 +19,8 @@ from .models import (
     ChatsUsersPets,
     ChatsUsersModerators,
     HappyPets,
-    UserType,)
+    UserType,
+    UsersDjango)
 
 from .serializers import (
     UsersSerializers,
@@ -40,7 +41,8 @@ from .serializers import (
     ChatsUsersPetsSerializers,
     ChatsUsersModeratorsSerializers,
     HappyPetsSerializers,
-    UserTypeSerializers,)
+    UserTypeSerializers,
+    UsersDjangoSerializer)
 # Create your views here.
 
 
@@ -62,6 +64,15 @@ class UsersListCreateView(generics.ListCreateAPIView):
 class UsersRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Users.objects.all()
     serializer_class = UsersSerializers
+
+#UsersDjango UsersDjangoSerializer
+class UsersDjangoListCreateView(generics.ListCreateAPIView):
+    queryset = UsersDjango.objects.all()
+    serializer_class = UsersDjangoSerializer
+
+class UsersDjangoRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UsersDjango.objects.all()
+    serializer_class = UsersDjangoSerializer
 
 
 # TicketsStatus

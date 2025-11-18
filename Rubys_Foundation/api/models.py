@@ -20,10 +20,19 @@ Los administradores toman la decision final sobre un reprot, si concuerda que el
 el usuario reportado sera baneado, si no, simplemente la publicacion se volvera visible
 """
 
+
+
+
 class UserType (models.Model):
     role = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
 
+class UsersDjango (models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    petsHelped = models.IntegerField(default=0)
+    petsAdopted = models.IntegerField(default=0)
+    isMember = models.BooleanField(default=False)
+    usertype = models.ForeignKey(UserType, on_delete=models.CASCADE)
 
 
 """
@@ -33,7 +42,7 @@ con datos importantes como su ubicacion, parametros para iniciar sesion y a cuan
 class Users (models.Model):
     firstName = models.CharField(max_length=50)
     lastName = models.CharField(max_length=50)
-    userName = models.CharField(max_length=20)
+    username = models.CharField(max_length=20, unique=True)
     phoneNumber = models.CharField(max_length=20)
     country = models.CharField(max_length=100)
     state = models.CharField(max_length=100)

@@ -6,6 +6,7 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,6 +15,23 @@ SECRET_KEY = 'django-insecure-)3dx%k(5qpi_uy76otfh1qki)%qki%3g%h4$l^222kpj=odjr&
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    'ROTATE_REFRESH_TOKENS': True, 
+}
+
+
 
 INSTALLED_APPS = [
     'corsheaders',
@@ -27,6 +45,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'rest_framework',
     'api',
+    'rest_framework_simplejwt'
 ]
 
 cloudinary.config(
