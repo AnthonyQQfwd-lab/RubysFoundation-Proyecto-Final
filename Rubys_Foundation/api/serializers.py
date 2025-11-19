@@ -51,7 +51,7 @@ class UsersDjangoSerializer(serializers.ModelSerializer):
 #Users
 class UsersSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Users
+        model = User
         fields = "__all__"
         
         extra_kwargs = {
