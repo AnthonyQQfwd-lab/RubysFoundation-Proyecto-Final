@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
+import { useNavigate, Link } from 'react-router-dom';
 import { getUsers, createUsers, createusersdjango } from '../../Services/ServicesUsers';
 import { createUserGroup } from '../../Services/ServicesUserGroups';
 
 function RegisterForm() {
+    const navigate = useNavigate();
+
     //Para realizar el select de ubicacion, necesito averiguar como traer la API de paises, y por cada seleccion que haga de el pais se desplegue para estados, despues que selecciono estado ahora ciudad 
     const [country, setCountry] = useState('');
     const [state, setState] = useState('');
@@ -75,7 +78,7 @@ function RegisterForm() {
         const newUserD = {
             first_name: firstName,
             last_name: lastName,
-            username: firstName + lastName.replace(/\s/g, ""),
+            username: email,
             email: email,
             password: password,
             
@@ -133,6 +136,7 @@ function RegisterForm() {
         <input type="password" value={confirmPassword}  placeholder='Confirm password' onChange={(e) => setConfirmPassword(e.target.value)}/><br/>
         <button onClick={registerUser}>Register</button>
         <button onClick={getUsuarios}>get</button>
+        <button onClick={() => navigate('/Login')}>Go back</button>
     </div>
   )
 }
