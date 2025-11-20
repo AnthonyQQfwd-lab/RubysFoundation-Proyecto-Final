@@ -58,7 +58,10 @@ from .views import (
     UserTypeRetrieveUpdateDestroyView,
     
     UsersDjangoListCreateView,
-    UsersDjangoRetrieveUpdateDestroyView)
+    UsersDjangoRetrieveUpdateDestroyView,
+    
+    user_groupListCreateView,
+    user_groupRetrieveUpdateDestroyView)
 
 from rest_framework_simplejwt.views import(TokenObtainPairView,TokenRefreshView)
 
@@ -145,4 +148,8 @@ urlpatterns = [
 
     path('login/', TokenObtainPairView.as_view(),name='view-get-token'),
     path('refresh/', TokenRefreshView.as_view(),name='view-refresh-token'),
+
+    #user_group
+    path('usergroup/', user_groupListCreateView.as_view(), name="Get and Post user_group"),
+    path('usergroup/<int:pk>/', user_groupRetrieveUpdateDestroyView.as_view(), name="Put delete byid  user_group"),
 ]

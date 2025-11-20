@@ -22,6 +22,14 @@ from .models import (
     ChatsUsersModerators,
     UserType)
 
+user_group = User.groups.through
+
+class user_groupSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = user_group
+        fields = "__all__"
+
+
 #UserType
 class UserTypeSerializers(serializers.ModelSerializer):
     class Meta:
@@ -51,7 +59,7 @@ class UsersDjangoSerializer(serializers.ModelSerializer):
 #Users
 class UsersSerializers(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = Users
         fields = "__all__"
         
         extra_kwargs = {

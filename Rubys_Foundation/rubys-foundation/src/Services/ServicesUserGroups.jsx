@@ -1,9 +1,9 @@
 /* CRUD - Datos */
 
 //(GET)
-async function getUsers() {
+async function getUserGroup() {
     try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/users/', {
+        const peticion = await fetch('http://127.0.0.1:8000/api/usergroup/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,19 +18,18 @@ async function getUsers() {
         return Usuarios;
 
     } catch (error) {
-        console.error("there is a problem getting users", error);
+        console.error("there is a problem getting UserGroup", error);
         throw error;
     }
 }
 
 //(POST)
-async function createUsers(newUser) {
+async function createUserGroup(newUser) {
     try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/users/', {
+        const peticion = await fetch('http://127.0.0.1:8000/api/usergroup/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(newUser)
         });
@@ -51,9 +50,9 @@ async function createUsers(newUser) {
 }
 
 //(POST)
-async function createusersdjango(newUser) {
+async function createUserGroupdjango(newUser) {
     try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/usersdjango/', {
+        const peticion = await fetch('http://127.0.0.1:8000/api/usergroup/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -77,9 +76,9 @@ async function createusersdjango(newUser) {
 }
 
 //(PUT || PATCH)
-async function updateUsers(id, updateData) {
+async function updateUserGroup(id, updateData) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/usergroup/${id}`, {
             method: 'PATCH', 
             headers: {
                 'Content-Type': 'application/json'
@@ -101,9 +100,9 @@ async function updateUsers(id, updateData) {
 }
 
 //(DELETE)
-async function deleteUsers(id) {
+async function deleteUserGroup(id) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/usergroup/${id}`, {
             method: 'DELETE'
         });
 
@@ -119,4 +118,4 @@ async function deleteUsers(id) {
     }
 }
 
-export { getUsers, createUsers, updateUsers, deleteUsers, createusersdjango};
+export { getUserGroup, createUserGroup, updateUserGroup, deleteUserGroup, createUserGroupdjango};

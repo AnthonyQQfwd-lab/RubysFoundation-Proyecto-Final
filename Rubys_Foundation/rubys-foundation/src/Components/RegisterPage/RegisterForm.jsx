@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { getUsers, createUsers, createusersdjango } from '../../Services/ServicesUsers';
-
+import { createUserGroup } from '../../Services/ServicesUserGroups';
 
 function RegisterForm() {
     //Para realizar el select de ubicacion, necesito averiguar como traer la API de paises, y por cada seleccion que haga de el pais se desplegue para estados, despues que selecciono estado ahora ciudad 
@@ -82,12 +82,21 @@ function RegisterForm() {
         };
 
         
+
+        
         const user = await createUsers(newUser)
         const userd = await createusersdjango(newUserD)
 
+        const newUserGroup = {
+            user: userd.id,
+            group: 1
+        }
+
+        const userGroup = await createUserGroup(newUserGroup)
+
         console.log(user)
         console.log(userd);
-        
+        console.log(userGroup)
     }
 
   return (
