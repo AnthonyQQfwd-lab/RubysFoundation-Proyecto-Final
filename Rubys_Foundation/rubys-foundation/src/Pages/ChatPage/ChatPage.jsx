@@ -1,16 +1,12 @@
 import React from 'react'
 import NavBar from '../../Components/NavBar'
-function HomePage() {
+function ChatPage() {
   return (
     <div>
-        
         <NavBar />
-        HomePage
-        
-
-
+        ChatPage
     </div>
   )
 }
 
-export default HomePage
+export default ChatPage

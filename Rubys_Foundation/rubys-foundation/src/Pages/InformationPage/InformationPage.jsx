@@ -1,16 +1,12 @@
 import React from 'react'
 import NavBar from '../../Components/NavBar'
-function HomePage() {
+function InformationPage() {
   return (
     <div>
-        
         <NavBar />
-        HomePage
-        
-
-
+        InformationPage
     </div>
   )
 }
 
-export default HomePage
+export default InformationPage

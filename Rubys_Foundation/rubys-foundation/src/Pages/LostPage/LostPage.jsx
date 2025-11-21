@@ -1,16 +1,12 @@
 import React from 'react'
 import NavBar from '../../Components/NavBar'
-function HomePage() {
+function LostPage() {
   return (
     <div>
-        
         <NavBar />
-        HomePage
-        
-
-
+        LostPage
     </div>
   )
 }
 
-export default HomePage
+export default LostPage

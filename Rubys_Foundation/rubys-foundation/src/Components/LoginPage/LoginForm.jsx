@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import { createLogin } from '../../Services/ServicesLogin';
+import { getUsers } from '../../Services/ServicesUsers';
 function LoginForm() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("")
@@ -14,11 +15,21 @@ function LoginForm() {
         }
         const newLogin = await createLogin(login)
         console.log(login)
-        console.log(newLogin)
+        console.log("-------------", newLogin)
 
         localStorage.setItem("token", JSON.stringify(newLogin));
         const token = JSON.parse(localStorage.getItem("token"));
         console.log("token:    " + token.access + "       refresh:     " + token.refresh);
+
+        const users = await getUsers()
+        const user = users.find(
+          u => u.email.toLowerCase().trim() === email.toLowerCase().trim()
+        );
+
+
+        console.log(users)
+        console.log(user)
+
 
         if(token){
           navigate('/Home')
