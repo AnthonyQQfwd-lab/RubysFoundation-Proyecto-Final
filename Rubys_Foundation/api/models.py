@@ -57,8 +57,6 @@ class Users (models.Model):
     isMember = models.BooleanField(default=False)
     dateJoined = models.DateField(default=timezone.now)
     usertype = models.ForeignKey(UserType, on_delete=models.CASCADE)
-    def __str__(self):
-        return f" {self.name} - {self.userType.role}"
     
 """
 Clase TicketsStatus es una clase que almacenera los status de los tickets, los cuales son:
