@@ -1,11 +1,28 @@
 import {React, useState, useEffect} from 'react'
 import { useNavigate, Link } from 'react-router-dom';
+import { createLogin } from '../../Services/ServicesLogin';
 function LoginForm() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    function logIn (){
-      
+    async function logIn (){
+        const login = {
+          username: email,
+          password: password
+
+        }
+        const newLogin = await createLogin(login)
+        console.log(login)
+        console.log(newLogin)
+
+        localStorage.setItem("token", JSON.stringify(newLogin));
+        const token = JSON.parse(localStorage.getItem("token"));
+        console.log("token:    " + token.access + "       refresh:     " + token.refresh);
+
+        if(token){
+          navigate('/Home')
+        }
     }
 
 

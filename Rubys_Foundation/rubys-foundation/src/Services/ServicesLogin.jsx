@@ -1,9 +1,9 @@
 /* CRUD - Datos */
 
 //(GET)
-async function getUsers() {
+async function getLogin() {
     try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/users/', {
+        const peticion = await fetch('http://127.0.0.1:8000/api/login/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,15 +18,15 @@ async function getUsers() {
         return Usuarios;
 
     } catch (error) {
-        console.error("there is a problem getting users", error);
+        console.error("there is a problem getting Login", error);
         throw error;
     }
 }
 
 //(POST)
-async function createUsers(newUser) {
+async function createLogin(newUser) {
     try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/users/', {
+        const peticion = await fetch('http://127.0.0.1:8000/api/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,9 +50,9 @@ async function createUsers(newUser) {
 }
 
 //(POST)
-async function createusersdjango(newUser) {
+async function createLogindjango(newUser) {
     try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/usersdjango/', {
+        const peticion = await fetch('http://127.0.0.1:8000/api/logindjango/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -76,9 +76,9 @@ async function createusersdjango(newUser) {
 }
 
 //(PUT || PATCH)
-async function updateUsers(id, updateData) {
+async function updateLogin(id, updateData) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/login/${id}`, {
             method: 'PATCH', 
             headers: {
                 'Content-Type': 'application/json'
@@ -100,9 +100,9 @@ async function updateUsers(id, updateData) {
 }
 
 //(DELETE)
-async function deleteUsers(id) {
+async function deleteLogin(id) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/login/${id}`, {
             method: 'DELETE'
         });
 
@@ -118,4 +118,4 @@ async function deleteUsers(id) {
     }
 }
 
-export { getUsers, createUsers, updateUsers, deleteUsers, createusersdjango};
+export { getLogin, createLogin, updateLogin, deleteLogin, createLogindjango};
