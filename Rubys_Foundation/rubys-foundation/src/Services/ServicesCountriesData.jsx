@@ -1,12 +1,16 @@
 /* CRUD - Datos */
+const API_URL = "https://api.countrystatecity.in/v1";
+const API_KEY = "404AAA75-62DA-40F4-A3B5-1400AE452FB1";
 
 //(GET)
 async function getCountries() {
     try {
-        const peticion = await fetch('http://localhost:3001/Countries', {
+        const peticion = await fetch(API_URL, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                "x-api-key": API_KEY,
+                'Content-Type': 'application/json',
+                
             }
         });
 
