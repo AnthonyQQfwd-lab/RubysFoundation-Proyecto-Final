@@ -1,6 +1,11 @@
 import React, {useState} from 'react'
 import { getCountries } from '../../Services/ServicesCountriesData'
+import { getStates, getStatesByCountry } from '../../Services/ServicesStatesData'
+import { getSCitiesyByState } from '../../Services/ServicesCitiesData'
 function PostPublication() {
+
+    
+
     const [name, setname] = useState("")
     const [age, setAge] = useState(0)
     const [breed, setBreed] = useState("")
@@ -24,12 +29,27 @@ function PostPublication() {
         const countries = await getCountries();
         console.log(countries)
     }
+    
+    async function getAllStates(){
+        const states = await getStates();
+        console.log(states)
+    }
+
+    async function getStateByCountry(){
+        const statesByCountry = await getStatesByCountry('CR');
+        console.log(statesByCountry)
+    }
+
+    async function getCityByState(){
+        const citiesByCountry = await getSCitiesyByState('CR', "P");
+        console.log(citiesByCountry)
+    }
 
   return (
     <div>PostPublication
-        <label htmlFor="">Name</label>
-        <input type="text" value={name} placeholder='name' onChange={(e) => setname(e.target.value)} />
-        <label>Choose a picture or video:</label><br/>
+        <label htmlFor="">Name</label><br/>
+        <input type="text" value={name} placeholder='name' onChange={(e) => setname(e.target.value)} /><br/>
+        <label>Choose a picture or video:</label><br/><br/>
         <input type="file"/><br/>
         <label htmlFor="">Age</label><br/>
         <input type="number"  placeholder='Age' onChange={(e) => setAge(e.target.value)}/><br/>
@@ -58,7 +78,10 @@ function PostPublication() {
         </select><br/>
         <label htmlFor="">Reward?</label><br/>
         <input type="number" value={reward} placeholder='reward' onChange={(e) => setReward(e.target.value)} /><br/>
-        <button onClick={getpaises}>GeT countries</button>
+        <button onClick={getpaises}>Get countries</button>
+        <button onClick={getAllStates}>Get states</button>
+        <button onClick={getStateByCountry}>Get states by country</button>
+        <button onClick={getCityByState}>Get cities by state </button>
     </div>
   )
 }

@@ -4,15 +4,18 @@ import '../styles/NavBar/NavBar.css';
 
 function NavBar() {
   const navigate = useNavigate();
+  const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+
+  console.log("Usuario ---------",currentUser)
 
   function LogOut(){
     sessionStorage.removeItem("currentUser");
     localStorage.removeItem("access");
     navigate("/Login");
   }
+
   return (
     <div id="navBar">
-        
         <button onClick={() => navigate('/Home')}>Home</button>
         <button onClick={() => navigate('/Profile')}>Profile</button>
         <button onClick={() => navigate('/Chat')}>Chat</button>
@@ -21,6 +24,8 @@ function NavBar() {
         <button onClick={() => navigate('/Donation')}>Donation</button>
         <button onClick={() => navigate('/Post')}>Post</button>
         <button onClick={LogOut}>Log out</button>
+        <h1>{currentUser?.firstName} {currentUser?.lastName}</h1>
+
     </div>
   )
 }

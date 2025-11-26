@@ -1,11 +1,11 @@
-/* CRUD - countries */
-const API_URL = "https://api.countrystatecity.in/v1/countries";
+/* CRUD - Cities */
+
 const API_KEY = "UE9TbFlRM2xJUWRnQllQVGFVRnFxWnE5cFRUT2NCcmZ0R09TbUllSg==";
 
-//(GET)
-async function getCountries() {
+//(GET city by state)
+async function getSCitiesyByState(countryIso2, stateIso2) {
     try {
-        const peticion = await fetch(API_URL, {
+        const peticion = await fetch(`https://api.countrystatecity.in/v1/countries/${countryIso2}/states/${stateIso2}/cities`, {
             method: 'GET',
             headers: {
                 "X-CSCAPI-KEY": API_KEY,
@@ -18,13 +18,13 @@ async function getCountries() {
             throw new Error("Error getting ");
         }
 
-        const countries = await peticion.json();
-        return countries;
+        const cities = await peticion.json();
+        return cities;
 
     } catch (error) {
-        console.error("there is a problem getting Countries", error);
+        console.error("there is a problem getting cities", error);
         throw error;
     }
 }
 
-export {getCountries}
+export {getSCitiesyByState}

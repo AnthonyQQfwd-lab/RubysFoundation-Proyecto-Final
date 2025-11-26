@@ -23,6 +23,28 @@ async function getUsers() {
     }
 }
 
+async function getUser(id) {
+    try {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting user ");
+        }
+
+        const Usuarios = await peticion.json();
+        return Usuarios;
+
+    } catch (error) {
+        console.error("there is a problem getting users", error);
+        throw error;
+    }
+}
+
 //(POST)
 async function createUsers(newUser) {
     try {
@@ -121,4 +143,4 @@ async function deleteUsers(id) {
     }
 }
 
-export { getUsers, createUsers, updateUsers, deleteUsers, createusersdjango};
+export { getUsers, createUsers, updateUsers, deleteUsers, createusersdjango, getUser};
