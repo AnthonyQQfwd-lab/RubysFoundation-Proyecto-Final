@@ -35,7 +35,10 @@ async function createUsers(newUser) {
         });
 
         if (!peticion.ok) {
+            const errorData = await peticion.json();
+            console.error("Detalles del error:", errorData);
             throw new Error("Error creating user");
+
         }
 
         const createUser = await peticion.json();

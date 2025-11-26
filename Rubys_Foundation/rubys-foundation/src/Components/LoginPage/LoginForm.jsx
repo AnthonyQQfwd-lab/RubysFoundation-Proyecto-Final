@@ -1,7 +1,10 @@
-import {React, useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createLogin } from '../../Services/ServicesLogin';
 import { getUsers } from '../../Services/ServicesUsers';
+import { jwtDecode } from "jwt-decode";
+
+
 function LoginForm() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("")
@@ -11,29 +14,33 @@ function LoginForm() {
         const login = {
           username: email,
           password: password
-
         }
-        const newLogin = await createLogin(login)
-        console.log(login)
-        console.log("-------------", newLogin)
-
-        localStorage.setItem("token", JSON.stringify(newLogin));
-        const token = JSON.parse(localStorage.getItem("token"));
-        console.log("token:    " + token.access + "       refresh:     " + token.refresh);
-
-        const users = await getUsers()
-        const user = users.find(
-          u => u.email.toLowerCase().trim() === email.toLowerCase().trim()
-        );
+        //Posteo a el edpoint de login para obtener el access y el refresh token
+        const token = await createLogin(login)
+        
+        //subir el acces al local storage para ser util con als rutas privadas 
+        localStorage.setItem("access", JSON.stringify(token.access));
 
 
-        console.log(users)
-        console.log(user)
+        //decodificar el token para obtener al usuario mediante le id 
+        const decoded = jwtDecode(token.access);
+        const user = await getUsers(decoded.user_id);
 
+        //subir al usuario para tenerlo a la mano 
+        sessionStorage.setItem("currentUser", JSON.stringify(user));
+        const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
-        if(token){
+        //verificar si existe el usuario para redireccionar al homepage 
+        if(currentUser){
           navigate('/Home')
         }
+        else{
+          alert("Gmail o password wrong")
+        }
+
+        
+        
+
     }
 
 

@@ -6,7 +6,8 @@ function NavBar() {
   const navigate = useNavigate();
 
   function LogOut(){
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("currentUser");
+    localStorage.removeItem("access");
     navigate("/Login");
   }
   return (

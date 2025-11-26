@@ -61,7 +61,7 @@ function RegisterForm() {
         const newUser = {
             firstName: firstName,
             lastName: lastName,
-            username: firstName + lastName.replace(/\s/g, ""),
+            username: email,
             phoneNumber: phoneNumber,
             country: country,
             state: state,

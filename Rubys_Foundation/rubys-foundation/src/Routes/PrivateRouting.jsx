@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 const PrivateRouting = ({children}) =>{
 
-    const isAuthenticated = localStorage.getItem("token")
+    const isAuthenticated = localStorage.getItem("access")
 
     if(isAuthenticated)
     {

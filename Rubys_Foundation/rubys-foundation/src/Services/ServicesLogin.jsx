@@ -35,7 +35,8 @@ async function createLogin(newUser) {
         });
 
         if (!peticion.ok) {
-            throw new Error("Error creating user");
+            alert("Gmail o password wrong")
+            throw new Error("Error creating user o gmail o password wrong");
         }
 
         const createUser = await peticion.json();
