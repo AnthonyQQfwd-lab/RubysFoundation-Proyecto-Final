@@ -5,9 +5,6 @@ import '../styles/NavBar/NavBar.css';
 function NavBar() {
   const navigate = useNavigate();
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-
-  console.log("Usuario ---------",currentUser)
-
   function LogOut(){
     sessionStorage.removeItem("currentUser");
     localStorage.removeItem("access");
