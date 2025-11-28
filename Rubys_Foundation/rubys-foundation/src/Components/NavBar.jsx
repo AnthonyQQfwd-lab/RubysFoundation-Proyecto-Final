@@ -13,6 +13,7 @@ function NavBar() {
 
   return (
     <div id="navBar">
+      <header>
         <button onClick={() => navigate('/Home')}>Home</button>
         <button onClick={() => navigate('/Profile')}>Profile</button>
         <button onClick={() => navigate('/Chat')}>Chat</button>
@@ -22,7 +23,7 @@ function NavBar() {
         <button onClick={() => navigate('/Post')}>Post</button>
         <button onClick={LogOut}>Log out</button>
         <h1>{currentUser?.firstName} {currentUser?.lastName}</h1>
-
+      </header>
     </div>
   )
 }
