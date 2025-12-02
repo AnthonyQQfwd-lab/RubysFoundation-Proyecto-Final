@@ -1,5 +1,57 @@
 /* CRUD - Datos */
 
+
+
+
+
+//(POST claudinary)
+async function createClaudinary(file) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/mediaPets/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error creating ");
+        }
+
+        const createUser = await peticion.json();
+
+
+        return createUser;
+
+    } catch (error) {
+        console.error("Error creating media", error);
+        throw error;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //(GET)
 async function getMediaPets() {
     try {

@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
+import axios from "axios";
+
 //import del los services de pets para lamacenar la informacion de la pet en la tabla de pets 
 import { getPets, createPets } from '../../Services/ServicesPets'
 // importo de los services de media pets para lamacenar todos los archivo media de las pets 
@@ -10,6 +12,8 @@ import { getCats } from '../../Services/ServicesSpecies'
 import '../../Styles/PostPage/PostPage.css'
 function PostPublication() {
 
+    const [file, setFile] = useState(null);
+    const [url, setUrl] = useState("");
 
 
 
@@ -103,29 +107,47 @@ function PostPublication() {
             breed: 1
         }
 
-        const pet = await createPets(newPet)
+    
 
-        const newPublication = {
-            description: description,
-            reward: reward,
-            datePublications: Date.now(),
-            pet: pet.id
+    const pet = await createPets(newPet)
+        
+    if (image) {
+        const formData = new FormData();
+        formData.append("pet", pet.id);
+        formData.append("imagen", image);
+
+        try {
+        const pet = await axios.post(
+            "http://127.0.0.1:8000/api/mediaPets/",
+            formData,
+            {
+            headers: { "Content-Type": "multipart/form-data" },
+            }
+        );
+            console.log("Imagen subida:", pet.data);
+        setUrl(pet.data.imagen); 
+        } catch (err) {
+            console.error("Error subiendo imagen:", err);
         }
 
-        const publication = await createPublications()
+    }
 
-        const newMediaPet = {
-            //para tomar las imagenes habra que hacer un array para guardar varias y despues mapear para guardarlas 
-            imagen: image,
-            //posible adicion de video ( se tiene que planear )
-            pet: pet.id
-        }
+    const today = new Date().toISOString().split("T")[0]; 
+    const newPublication = {
+        description: description,
+        reward: reward,
+        datePublications: today,
+        pet: pet.id
+    }
 
-        const mediaPet = await createMediaPets(newMediaPet)
+    const publication = await createPublications(newPublication)
 
-        console.log(pet)
-        console.log(publication)
-        console.log(mediaPet)
+
+
+    console.log("Publicacion creada: ", publication)
+a
+    console.log("Pet creada:", pet);
+
     }
 
   return (
@@ -153,7 +175,12 @@ function PostPublication() {
         <label htmlFor="">Name</label><br/>
         <input type="text" value={name} placeholder='name' onChange={(e) => setname(e.target.value)} /><br/>
         <label>Choose a picture or video:</label><br/><br/>
+
+
         <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+
+
+
         <label >Age</label><br/>
         <input type="number" value={age}  placeholder='Age' onChange={(e) => setAge(e.target.value)}/><br/>
         <button id="btnCat" onClick={() => setSpecie("Cat")}><img src='../../../public/images/PostPage/cat_button.png'  width="200"  /></button>
