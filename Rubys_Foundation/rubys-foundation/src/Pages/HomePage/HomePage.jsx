@@ -1,12 +1,12 @@
 import React from 'react'
 import NavBar from '../../Components/NavBar'
+import CardsOutPut from '../../Components/HomePage/CardsOutPut'
 function HomePage() {
   return (
     <div>
         
         <NavBar />
-        HomePage
-        <img src="https://res.cloudinary.com/dzakbkipr/image/upload/v1763746889/mediapets/images/hdpv52qpi3p8ucosaler.webp" alt="" />
+        <CardsOutPut />
 
 
     </div>

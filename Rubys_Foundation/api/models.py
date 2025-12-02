@@ -115,6 +115,7 @@ class Pets (models.Model):
     age = models.IntegerField(default=0)
     vaccinated = models.CharField(max_length=50, default="unknown")
     isActive = models.BooleanField(default=True)
+    status = models.CharField(max_length=50, default="unknown")
     keeper = models.ForeignKey(Users, on_delete=models.CASCADE)
     breed = models.ForeignKey(Breeds, on_delete=models.CASCADE)
 

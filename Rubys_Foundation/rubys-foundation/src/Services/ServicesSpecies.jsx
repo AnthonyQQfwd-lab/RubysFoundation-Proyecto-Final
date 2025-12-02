@@ -95,4 +95,62 @@ async function getCat(name) {
   }
 }
 
-export { getDogs, getDog, getCats, getCat };
+async function createDogs(newDog) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/breeds/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newDog)
+        });
+
+        if (!peticion.ok) {
+            const errorData = await peticion.json();
+            console.error("Detalles del error:", errorData);
+            throw new Error("Error creating user");
+
+        }
+
+        const dog = await peticion.json();
+
+
+        return dog;
+
+    } catch (error) {
+        console.error("Error creating dogs", error);
+        throw error;
+    }
+}
+
+
+async function createCats(newCat) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/breeds/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCat)
+        });
+
+        if (!peticion.ok) {
+            const errorData = await peticion.json();
+            console.error("Detalles del error:", errorData);
+            throw new Error("Error creating user");
+
+        }
+
+        const cat = await peticion.json();
+
+
+        return cat;
+
+    } catch (error) {
+        console.error("Error creating cat", error);
+        throw error;
+    }
+}
+
+
+export { getDogs, getDog, getCats, getCat, createDogs, createCats };

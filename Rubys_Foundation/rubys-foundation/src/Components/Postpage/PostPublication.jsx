@@ -26,14 +26,15 @@ function PostPublication() {
     const [reward, setReward] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState()
+    const [status, setStatus] = useState("Unknown")
     const dialogRef = useRef(null);
 
     const [dogs, setDogs] = useState([])
     const [cats, setCats] = useState([])
     const [breeds, setBreeds] = useState([])
 
-    const handleChangeSpecie = (event) => {
-        setSpecie(event.target.value);
+    const handleChangeStatus = (event) => {
+        setStatus(event.target.value);
     };
 
     const handleChangebreed = (event) => {
@@ -103,6 +104,7 @@ function PostPublication() {
             age: age,
             vaccinated: isVaccinated || "unknown",
             isActive: true,
+            status: status, 
             keeper: currentUser.id,
             breed: 1
         }
@@ -151,7 +153,7 @@ a
     }
 
   return (
-    <div>PostPublication
+    <div>
         <dialog ref={dialogRef} id="modalBreeds">
             <div id="containerModal">
 
@@ -172,11 +174,16 @@ a
                 ))}
             </div>
         </dialog>
+
+         <select name="status" id="status" value={status} onChange={handleChangeStatus}>
+                <option value="">select an option</option>
+                <option value="Adopcion">Adoption pet</option>
+                <option value="Lost">Lost pet</option>
+                <option value="Wanted">Wanted pet</option>
+        </select><br/>
         <label htmlFor="">Name</label><br/>
         <input type="text" value={name} placeholder='name' onChange={(e) => setname(e.target.value)} /><br/>
         <label>Choose a picture or video:</label><br/><br/>
-
-
         <input type="file" onChange={(e) => setImage(e.target.files[0])} />
 
 
