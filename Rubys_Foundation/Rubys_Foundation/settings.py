@@ -1,4 +1,4 @@
-"""
+""" 
 Django settings for Rubys_Foundation project.
 """
 
@@ -7,6 +7,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from datetime import timedelta
+from corsheaders.defaults import default_headers   # <-- agregado para CORS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,7 +32,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
     'ROTATE_REFRESH_TOKENS': True, 
 }
-
 
 
 INSTALLED_APPS = [
@@ -79,6 +79,13 @@ DATABASES = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "x-cscapi-key",
+]
 
 
 MIDDLEWARE = [

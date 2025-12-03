@@ -20,7 +20,10 @@ from .models import (
     ChatsUsersPets,
     ChatsUsersModerators,
     HappyPets,
-    UserType)
+    UserType,
+    Countries,
+    States,
+    Cities)
 
 from .serializers import (
     UsersSerializers,
@@ -43,7 +46,10 @@ from .serializers import (
     HappyPetsSerializers,
     UserTypeSerializers,
     UsersDjangoSerializer,
-    user_groupSerializers)
+    user_groupSerializers,
+    CountriesSerializers,
+    StatesSerializers,
+    CitiesSerializers)
 # Create your views here.
 
 user_group = User.groups.through
@@ -254,4 +260,32 @@ class HappyPetsListCreateView(generics.ListCreateAPIView):
 class HappyPetsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = HappyPets.objects.all()
     serializer_class = HappyPetsSerializers
+
+
+#Countries
+class CountriesListCreateView(generics.ListCreateAPIView):
+    queryset = Countries.objects.all()
+    serializer_class = CountriesSerializers
+
+class CountriesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Countries.objects.all()
+    serializer_class = CountriesSerializers
+
+#States
+class StatesListCreateView(generics.ListCreateAPIView):
+    queryset = States.objects.all()
+    serializer_class = StatesSerializers
+
+class StatesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = States.objects.all()
+    serializer_class = StatesSerializers
+
+#Cities
+class CitiesListCreateView(generics.ListCreateAPIView):
+    queryset = Cities.objects.all()
+    serializer_class = CitiesSerializers
+
+class CitiesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Cities.objects.all()
+    serializer_class = CitiesSerializers
 

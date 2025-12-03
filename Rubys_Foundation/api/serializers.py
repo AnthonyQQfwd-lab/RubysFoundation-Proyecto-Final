@@ -20,7 +20,10 @@ from .models import (
     MediaMessages,
     ChatsUsersPets,
     ChatsUsersModerators,
-    UserType)
+    UserType,
+    Countries,
+    States,
+    Cities)
 
 user_group = User.groups.through
 
@@ -180,4 +183,25 @@ class ChatsUsersPetsSerializers(serializers.ModelSerializer):
 class ChatsUsersModeratorsSerializers(serializers.ModelSerializer):
     class Meta:
         model = ChatsUsersModerators
+        fields = "__all__"
+
+
+#Countries
+class CountriesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Countries
+        fields = "__all__"
+
+
+#States
+class StatesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = States
+        fields = "__all__"
+
+
+#Cities
+class CitiesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Cities
         fields = "__all__"

@@ -233,4 +233,22 @@ class ChatsUsersModerators (models.Model):
     chat = models.ForeignKey(Chats, on_delete=models.CASCADE)
 
 
+class Countries (models.Model):
+    name = models.CharField(max_length=100)
+    iso2 = models.CharField(max_length=100)
+
+
+
+class States (models.Model):
+    name = models.CharField(max_length=100)
+    iso2Country = models.CharField(max_length=100)
+    iso2State = models.CharField(max_length=100)
+
+
+class Cities (models.Model):
+    name = models.CharField(max_length=100)
+    iso2State = models.CharField(max_length=100)
+    iso2Country = models.CharField(max_length=100)
+    latitude = models.CharField(max_length=100)
+    longitude = models.CharField(max_length=100)
 

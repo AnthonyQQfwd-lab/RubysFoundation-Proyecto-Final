@@ -41,7 +41,7 @@ function CardsOutPut() {
         {pets.map((pet) => (
             <div key={pet.id}>
                 {pet.name}<br/>
-                {cats.name[pet.breed]} - {pet.age}<br/>
+                
                 {currentUser.city} 2.5km<br/>
                 {pet.vaccinated}
             </div>

@@ -61,7 +61,16 @@ from .views import (
     UsersDjangoRetrieveUpdateDestroyView,
     
     user_groupListCreateView,
-    user_groupRetrieveUpdateDestroyView)
+    user_groupRetrieveUpdateDestroyView,
+    
+    CountriesListCreateView,
+    CountriesRetrieveUpdateDestroyView,
+    
+    StatesListCreateView,
+    StatesRetrieveUpdateDestroyView,
+    
+    CitiesListCreateView,
+    CitiesRetrieveUpdateDestroyView)
 
 from rest_framework_simplejwt.views import(TokenObtainPairView,TokenRefreshView)
 
@@ -152,4 +161,16 @@ urlpatterns = [
     #user_group
     path('usergroup/', user_groupListCreateView.as_view(), name="Get and Post user_group"),
     path('usergroup/<int:pk>/', user_groupRetrieveUpdateDestroyView.as_view(), name="Put delete byid  user_group"),
+
+    #Countries
+    path('countries/', CountriesListCreateView.as_view(), name="Get and Post countries"),
+    path('countries/<int:pk>/', CountriesRetrieveUpdateDestroyView.as_view(), name="Put delete byid  countries"),
+
+    #States
+    path('states/', StatesListCreateView.as_view(), name="Get and Post states"),
+    path('states/<int:pk>/', StatesRetrieveUpdateDestroyView.as_view(), name="Put delete byid  states"),
+
+    #Cities
+    path('cities/', CitiesListCreateView.as_view(), name="Get and Post cities"),
+    path('cities/<int:pk>/', CitiesRetrieveUpdateDestroyView.as_view(), name="Put delete byid  cities"),
 ]

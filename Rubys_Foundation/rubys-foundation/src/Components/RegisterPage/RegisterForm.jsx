@@ -4,7 +4,7 @@ import { createUsers, createusersdjango } from '../../Services/ServicesUsers';
 import { createUserGroup } from '../../Services/ServicesUserGroups';
 import { getCountries } from '../../Services/ServicesCountriesData';
 import { getStatesByCountry } from '../../Services/ServicesStatesData';
-import { getSCitiesyByState } from '../../Services/ServicesCitiesData';
+import { getsCitiesyByState } from '../../Services/ServicesCitiesData';
 
 function RegisterForm() {
     const navigate = useNavigate();
@@ -87,7 +87,7 @@ function RegisterForm() {
     useEffect(() => {
         async function getCities() {
             if (!country.iso2 || !state.iso2) return;
-            const citiesData = await getSCitiesyByState(country.iso2, state.iso2);
+            const citiesData = await getsCitiesyByState(country.iso2, state.iso2);
             setCities(citiesData);
         }
         getCities();

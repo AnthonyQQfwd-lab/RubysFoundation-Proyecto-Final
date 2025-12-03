@@ -27,4 +27,58 @@ async function getCountries() {
     }
 }
 
-export {getCountries}
+//(GET)
+async function getCountriesLocal() {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/countries/', {
+            method: 'GET',
+            headers: {
+                "X-CSCAPI-KEY": API_KEY,
+                'Content-Type': 'application/json',
+                
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const countries = await peticion.json();
+        return countries;
+
+    } catch (error) {
+        console.error("there is a problem getting Countries", error);
+        throw error;
+    }
+}
+
+
+async function createCountry(newCountry) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/countries/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCountry)
+        });
+
+        if (!peticion.ok) {
+            const errorData = await peticion.json();
+            console.error("Detalles del error:", errorData);
+            throw new Error("Error creating user");
+
+        }
+
+        const country = await peticion.json();
+
+
+        return country;
+
+    } catch (error) {
+        console.error("Error creating country", error);
+        throw error;
+    }
+}
+
+export {getCountries, createCountry, getCountriesLocal}

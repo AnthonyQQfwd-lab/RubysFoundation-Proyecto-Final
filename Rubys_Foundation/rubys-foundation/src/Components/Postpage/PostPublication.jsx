@@ -147,7 +147,7 @@ function PostPublication() {
 
 
     console.log("Publicacion creada: ", publication)
-a
+
     console.log("Pet creada:", pet);
 
     }

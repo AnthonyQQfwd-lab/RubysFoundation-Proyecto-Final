@@ -53,4 +53,60 @@ async function getStatesByCountry(countryIso2) {
     }
 }
 
-export {getStatesByCountry, getStates}
+
+async function getStatesLocal() {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/states/', {
+            method: 'GET',
+            headers: {
+                "X-CSCAPI-KEY": API_KEY,
+                'Content-Type': 'application/json',
+                
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const countries = await peticion.json();
+        return countries;
+
+    } catch (error) {
+        console.error("there is a problem getting Countries", error);
+        throw error;
+    }
+}
+
+
+
+
+async function createState(newState) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/states/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newState)
+        });
+
+        if (!peticion.ok) {
+            const errorData = await peticion.json();
+            console.error("Detalles del error:", errorData);
+            throw new Error("Error creating user");
+
+        }
+
+        const state = await peticion.json();
+
+
+        return state;
+
+    } catch (error) {
+        console.error("Error creating state", error);
+        throw error;
+    }
+}
+
+export {getStatesByCountry, getStates, createState, getStatesLocal}

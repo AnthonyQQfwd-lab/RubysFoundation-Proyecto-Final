@@ -1,8 +1,14 @@
 import React from 'react';
 import { createDogs, getDogs } from '../Services/ServicesSpecies';
 import { createCats, getCats } from '../Services/ServicesSpecies';
+import { getCountries, createCountry } from '../Services/ServicesCountriesData';
+import { getStates, createState, getStatesLocal } from '../Services/ServicesStatesData';
+import { getsCitiesyByState } from '../Services/ServicesCitiesData';
+import { getCountriesLocal } from '../Services/ServicesCountriesData';
+import { createCityLocal } from '../Services/ServicesCitiesData';
 async function uploadAnimals() {
   try {
+        /*
         const dogs = await getDogs();
 
         const newDogs = await Promise.all(
@@ -26,7 +32,56 @@ async function uploadAnimals() {
             })
         );
 
-        console.log("Perros y fatos cargados en las tablas:", newDogs, newCats);
+        const countries = await getCountries();
+        const newCountries = await Promise.all(
+            countries.map(country => {
+                const newCountry = {
+                    name: country.name,
+                    iso2: country.iso2
+                };
+                return createCountry(newCountry);
+            })
+        );
+        
+        console.log("entro")
+        
+        
+
+        const states = await getStates();
+        console.log(states)
+        for (const state of states) {
+            const newState = {
+                name: state.name,
+                iso2Country: state.country_code,
+                iso2State: state.iso2
+            }; 
+            await createState(newState);  
+        }
+        console.log("ultimo estado subido: ", newState)
+
+        */
+        console.log("Entro ")
+        const statesLocal = await getStatesLocal(); 
+        
+        for (const state of statesLocal) {
+            const cities = await getsCitiesyByState(state.iso2Country, state.iso2State);
+
+            let batch = [];
+            for (const city of cities) {
+                batch.push({
+                    name: city.name,
+                    iso2State: state.iso2State,
+                    iso2Country: state.iso2Country,
+                    latitude: city.latitude,
+                    longitude: city.longitude
+                });
+            }
+            await createCityLocal(batch); // Inserta todas juntas
+            console.log(`Se insertaron ${batch.length} ciudades para el estado ${state.name}`)
+        }
+        
+
+        console.log("Perros, gatos y paises cargados en las tablas:", newDogs, newCats, newCountries);
     } catch (error) {
         console.error("Error al cargar los animales:", error);
     }
