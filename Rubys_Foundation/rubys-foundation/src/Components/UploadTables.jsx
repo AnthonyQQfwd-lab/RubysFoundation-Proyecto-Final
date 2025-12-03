@@ -66,18 +66,18 @@ async function uploadAnimals() {
         for (const state of statesLocal) {
             const cities = await getsCitiesyByState(state.iso2Country, state.iso2State);
 
-            let batch = [];
             for (const city of cities) {
-                batch.push({
+                    const newCity = {
                     name: city.name,
                     iso2State: state.iso2State,
                     iso2Country: state.iso2Country,
                     latitude: city.latitude,
-                    longitude: city.longitude
-                });
+                    longitude: city.longitude     
+                };
+
+                const createdCity = await createCityLocal(newCity);
+                console.log("Ciudad creada:", createdCity);
             }
-            await createCityLocal(batch); // Inserta todas juntas
-            console.log(`Se insertaron ${batch.length} ciudades para el estado ${state.name}`)
         }
         
 
