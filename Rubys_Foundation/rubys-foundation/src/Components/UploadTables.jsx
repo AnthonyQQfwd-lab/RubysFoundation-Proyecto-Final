@@ -1,65 +1,83 @@
 import React from 'react';
-import { createDogs, getDogs } from '../Services/ServicesSpecies';
-import { createCats, getCats } from '../Services/ServicesSpecies';
+import { createAnimals, createDogs, getDogs } from '../Services/ServicesSpecies';
+import {  getCats } from '../Services/ServicesSpecies';
 import { getCountries, createCountry } from '../Services/ServicesCountriesData';
-import { getStates, createState, getStatesLocal } from '../Services/ServicesStatesData';
+import { getStates, createState, getStatesLocal, getStatesByCountry } from '../Services/ServicesStatesData';
 import { getsCitiesyByState } from '../Services/ServicesCitiesData';
-import { getCountriesLocal } from '../Services/ServicesCountriesData';
+import { getCountriesLocal, getCountry } from '../Services/ServicesCountriesData';
 import { createCityLocal } from '../Services/ServicesCitiesData';
+import { createMediaBreed } from '../Services/ServicesMediaBreeds';
 async function uploadAnimals() {
   try {
-        /*
+        
         const dogs = await getDogs();
 
-        const newDogs = await Promise.all(
-            dogs.map(dog => {
-                const newDog = {
-                    name: dog.name,
-                    specieBreed: 2
-                };
-                return createDogs(newDog);
-            })
-        );
+        for (const dog of dogs) {
+            const newDog = {
+                name: dog.name,
+                specieBreed: 2
+            }
 
-        const cats = await getCats();
-        const newCats = await Promise.all(
-            cats.map(cat => {
-                const newCat = {
-                    name: cat.name,
-                    specieBreed: 1
-                };
-                return createCats(newCat);
-            })
-        );
+            const dogLocal = await createDogs(newDog);
+            
+            const newMediaBreed = {
+                imageUrl: dog.image.url,
+                breed: dogLocal.id
 
-        const countries = await getCountries();
-        const newCountries = await Promise.all(
-            countries.map(country => {
-                const newCountry = {
-                    name: country.name,
-                    iso2: country.iso2
-                };
-                return createCountry(newCountry);
-            })
-        );
-        
-        console.log("entro")
-        
-        
+            }
 
-        const states = await getStates();
-        console.log(states)
-        for (const state of states) {
-            const newState = {
-                name: state.name,
-                iso2Country: state.country_code,
-                iso2State: state.iso2
-            }; 
-            await createState(newState);  
+            const mediaBreed = await createMediaBreed(newMediaBreed);
+            console.log("breed image creada ", mediaBreed)
         }
-        console.log("ultimo estado subido: ", newState)
+        
+        const catsApi = await getCats();
+        console.log(catsApi)
+        for (const catApi of catsApi) {
+            const newCat = {
+                name: catApi.name,
+                specieBreed: 1
+            }
+            
+            const catLocal = await createAnimals(newCat);
 
-        */
+            if (catApi.image && catApi.image.url) {
+                const newMediaBreed = {
+                    imageUrl: catApi.image.url,
+                    breed: catLocal.id
+                };
+                const mediaBreed = await createMediaBreed(newMediaBreed);
+                console.log("breed image creada ", mediaBreed);
+            }
+
+            
+
+        }
+        
+        
+        
+        const countryApi = await getCountry("CR");
+        const newCountry = {
+            name: countryApi.name,
+            iso2: countryApi.iso2
+        }
+
+        const country = await createCountry(newCountry);
+        console.log("Country local: ", country)
+        
+        
+        const statesApi = await getStatesByCountry("CR")
+
+        for (const stateApi of statesApi){
+            const newState = {
+                name:stateApi.name,
+                iso2Country: "CR",
+                iso2State: stateApi.iso2
+            }
+            const state = await createState(newState); 
+            console.log("state subido: ", state)
+        }
+        
+        
         console.log("Entro ")
         const statesLocal = await getStatesLocal(); 
         
@@ -70,7 +88,6 @@ async function uploadAnimals() {
                     const newCity = {
                     name: city.name,
                     iso2State: state.iso2State,
-                    iso2Country: state.iso2Country,
                     latitude: city.latitude,
                     longitude: city.longitude     
                 };
@@ -80,8 +97,9 @@ async function uploadAnimals() {
             }
         }
         
-
+        
         console.log("Perros, gatos y paises cargados en las tablas:", newDogs, newCats, newCountries);
+        
     } catch (error) {
         console.error("Error al cargar los animales:", error);
     }

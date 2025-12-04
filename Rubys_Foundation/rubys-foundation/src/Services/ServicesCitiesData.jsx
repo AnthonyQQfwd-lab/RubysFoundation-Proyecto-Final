@@ -28,6 +28,30 @@ async function getsCitiesyByState(countryIso2, stateIso2) {
 }
 
 
+async function getsCitiesLocal() {
+    try {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/cities/`, {
+            method: 'GET',
+            headers: {
+                "X-CSCAPI-KEY": API_KEY,
+                'Content-Type': 'application/json',
+                
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const cities = await peticion.json();
+        return cities;
+
+    } catch (error) {
+        console.error("there is a problem getting cities", error);
+        throw error;
+    }
+}
+
 async function createCityLocal(newCity) {
     try {
         const peticion = await fetch('http://127.0.0.1:8000/api/cities/', {
@@ -56,4 +80,4 @@ async function createCityLocal(newCity) {
     }
 }
 
-export {getsCitiesyByState, createCityLocal}
+export {getsCitiesyByState, createCityLocal, getsCitiesLocal}

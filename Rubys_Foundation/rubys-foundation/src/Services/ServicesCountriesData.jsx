@@ -27,6 +27,30 @@ async function getCountries() {
     }
 }
 
+async function getCountry(iso2) {
+    try {
+        const peticion = await fetch(`https://api.countrystatecity.in/v1/countries/${iso2}`, {
+            method: 'GET',
+            headers: {
+                "X-CSCAPI-KEY": API_KEY,
+                'Content-Type': 'application/json',
+                
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const country = await peticion.json();
+        return country;
+
+    } catch (error) {
+        console.error("there is a problem getting country", error);
+        throw error;
+    }
+}
+
 //(GET)
 async function getCountriesLocal() {
     try {
@@ -55,7 +79,7 @@ async function getCountriesLocal() {
 
 async function createCountry(newCountry) {
     try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/countries/', {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/countries/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -81,4 +105,4 @@ async function createCountry(newCountry) {
     }
 }
 
-export {getCountries, createCountry, getCountriesLocal}
+export {getCountries, createCountry, getCountriesLocal, getCountry}

@@ -23,7 +23,8 @@ from .models import (
     UserType,
     Countries,
     States,
-    Cities)
+    Cities,
+    MediaBreeds)
 
 user_group = User.groups.through
 
@@ -204,4 +205,10 @@ class StatesSerializers(serializers.ModelSerializer):
 class CitiesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Cities
+        fields = "__all__"
+
+#mediaBreeds
+class MediaBreedsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = MediaBreeds
         fields = "__all__"

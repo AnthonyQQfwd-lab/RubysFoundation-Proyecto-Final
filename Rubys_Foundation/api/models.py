@@ -105,6 +105,10 @@ class Breeds (models.Model):
     name = models.CharField(max_length=50, default="unknown")
     specieBreed = models.ForeignKey(Species, on_delete=models.CASCADE)
 
+class MediaBreeds (models.Model):
+    imageUrl = models.CharField(max_length=1000)
+    breed = models.ForeignKey(Breeds, on_delete=models.CASCADE)
+
 
 """
  La tabla Pets almacena todas las mascotas que han sido publicadas en el aplicativo
@@ -248,7 +252,6 @@ class States (models.Model):
 class Cities (models.Model):
     name = models.CharField(max_length=100)
     iso2State = models.CharField(max_length=100)
-    iso2Country = models.CharField(max_length=100)
     latitude = models.CharField(max_length=100)
     longitude = models.CharField(max_length=100)
 

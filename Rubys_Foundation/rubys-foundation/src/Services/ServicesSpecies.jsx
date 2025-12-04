@@ -25,6 +25,8 @@ async function getDogs() {
   }
 }
 
+
+
 // (GET) - buscar una raza de perro por nombre
 async function getDog(name) {
   try {
@@ -124,27 +126,27 @@ async function createDogs(newDog) {
 }
 
 
-async function createCats(newCat) {
+async function createAnimals(newAnimal) {
     try {
         const peticion = await fetch('http://127.0.0.1:8000/api/breeds/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newCat)
+            body: JSON.stringify(newAnimal)
         });
 
         if (!peticion.ok) {
             const errorData = await peticion.json();
             console.error("Detalles del error:", errorData);
-            throw new Error("Error creating user");
+            throw new Error("Error creating animal");
 
         }
 
-        const cat = await peticion.json();
+        const animal = await peticion.json();
 
 
-        return cat;
+        return animal;
 
     } catch (error) {
         console.error("Error creating cat", error);
@@ -152,5 +154,28 @@ async function createCats(newCat) {
     }
 }
 
+// (GET) - todas las razas de perros y gatos 
+async function getAnimals() {
+  try {
+    const peticion = await fetch("http://127.0.0.1:8000/api/breeds/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-export { getDogs, getDog, getCats, getCat, createDogs, createCats };
+    if (!peticion.ok) {
+      throw new Error("Error getting dogs");
+    }
+
+    const animals = await peticion.json();
+    return animals;
+  } catch (error) {
+    console.error("There is a problem getting dogs", error);
+    throw error;
+  }
+}
+
+
+
+export { getDogs, getDog, getCats, getCat, createDogs, createAnimals, getAnimals };

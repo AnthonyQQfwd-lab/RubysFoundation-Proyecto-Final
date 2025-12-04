@@ -23,7 +23,8 @@ from .models import (
     UserType,
     Countries,
     States,
-    Cities)
+    Cities,
+    MediaBreeds)
 
 from .serializers import (
     UsersSerializers,
@@ -49,7 +50,8 @@ from .serializers import (
     user_groupSerializers,
     CountriesSerializers,
     StatesSerializers,
-    CitiesSerializers)
+    CitiesSerializers,
+    MediaBreedsSerializers)
 # Create your views here.
 
 user_group = User.groups.through
@@ -288,4 +290,13 @@ class CitiesListCreateView(generics.ListCreateAPIView):
 class CitiesRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Cities.objects.all()
     serializer_class = CitiesSerializers
+
+#MediaBreeds
+class MediaBreedsListCreateView(generics.ListCreateAPIView):
+    queryset = MediaBreeds.objects.all()
+    serializer_class = MediaBreedsSerializers
+
+class MediaBreedsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MediaBreeds.objects.all()
+    serializer_class = MediaBreedsSerializers
 

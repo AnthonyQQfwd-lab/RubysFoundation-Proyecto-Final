@@ -70,7 +70,10 @@ from .views import (
     StatesRetrieveUpdateDestroyView,
     
     CitiesListCreateView,
-    CitiesRetrieveUpdateDestroyView)
+    CitiesRetrieveUpdateDestroyView,
+    
+    MediaBreedsListCreateView,
+    MediaBreedsRetrieveUpdateDestroyView)
 
 from rest_framework_simplejwt.views import(TokenObtainPairView,TokenRefreshView)
 
@@ -173,4 +176,8 @@ urlpatterns = [
     #Cities
     path('cities/', CitiesListCreateView.as_view(), name="Get and Post cities"),
     path('cities/<int:pk>/', CitiesRetrieveUpdateDestroyView.as_view(), name="Put delete byid  cities"),
+
+    #MediaBreeds
+    path('mediaBreeds/', MediaBreedsListCreateView.as_view(), name="Get and Post mediaBreeds"),
+    path('mediaBreeds/<int:pk>/', MediaBreedsRetrieveUpdateDestroyView.as_view(), name="Put delete byid  mediaBreeds"),
 ]

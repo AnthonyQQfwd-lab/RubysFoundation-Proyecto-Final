@@ -6,6 +6,10 @@ import { getCountries } from '../../Services/ServicesCountriesData';
 import { getStatesByCountry } from '../../Services/ServicesStatesData';
 import { getsCitiesyByState } from '../../Services/ServicesCitiesData';
 
+import { getCountriesLocal } from '../../Services/ServicesCountriesData';
+import { getStatesLocal } from '../../Services/ServicesStatesData';
+import { getsCitiesLocal } from '../../Services/ServicesCitiesData';
+
 function RegisterForm() {
     const navigate = useNavigate();
 
@@ -29,7 +33,7 @@ function RegisterForm() {
     //funcion que llama a todos los paises para ponerlo en el select 
     useEffect(() => {
         async function loadCountries() {
-            const countriesData = await getCountries();
+            const countriesData = await getCountriesLocal();
             setCountries(countriesData);
         }
         loadCountries();
@@ -48,7 +52,7 @@ function RegisterForm() {
     useEffect(() => {
         async function loadCountry() {
             if (!countryId) return;
-            const countries = await getCountries()
+            const countries = await getCountriesLocal()
             const country = countries.find(country => country.id == countryId);
             setCountry(country)
         }
@@ -60,7 +64,7 @@ function RegisterForm() {
     useEffect(() => {
         async function getStatesData() {
             if (!country.iso2) return;
-            const statesData = await getStatesByCountry(country.iso2);
+            const statesData = await getStatesLocal(country.iso2);
             setStates(statesData)
         }
         getStatesData()
@@ -76,7 +80,7 @@ function RegisterForm() {
     useEffect(() => {
         async function loadState() {
             if (!stateId || states.length === 0) return;
-            const selectedState = states.find(s => s.id == stateId);
+            const selectedState = states.find(state => state.id == stateId);
             setState(selectedState);
         }
         loadState();
@@ -86,17 +90,22 @@ function RegisterForm() {
 
     useEffect(() => {
         async function getCities() {
-            if (!country.iso2 || !state.iso2) return;
-            const citiesData = await getsCitiesyByState(country.iso2, state.iso2);
-            setCities(citiesData);
+            if (!country.iso2 || !state.iso2State) return;
+            const citiesData = await getsCitiesLocal();
+            const filteredCities = citiesData.filter(
+                (city) =>
+                    city.iso2State === state.iso2State 
+            );
+            setCities(filteredCities);
         }
         getCities();
-    }, [state]);
+    }, [state, country]);
+
 
     const handleChangeCity = (event) => {
         const value = event.target.value;
         setCityId(value);
-        const selectedCity = cities.find(c => c.id == value);
+        const selectedCity = cities.find(city => city.id == value);
         setCity(selectedCity);
     };
 
