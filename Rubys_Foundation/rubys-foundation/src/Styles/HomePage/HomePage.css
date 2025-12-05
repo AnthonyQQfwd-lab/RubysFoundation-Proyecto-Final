@@ -1,0 +1,57 @@
+.cards{
+    background-color: red;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: rgb(10, 10, 10);
+    margin: 10px;
+    text-align: start;
+    contain: content;
+    height: fit-content;
+    width: fit-content;
+    font-size: 10px;
+}
+
+.cards img {
+    width: 100%;
+    
+}
+
+p{
+    color: rgb(106, 114, 130)
+}
+
+
+#btnContainer{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+#btnContainer button {
+    white-space: nowrap;
+}
+
+#nameContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px; 
+}
+
+#nameContainer h4 {
+    color: white;
+    
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+
+#nameContainer img {
+    height: 45px;
+    width: 45px;
+    
+}
+
+#cardsContainer{
+    display: flex;
+}

@@ -3,7 +3,6 @@
 
 
 
-
 //(POST claudinary)
 async function createClaudinary(file) {
     try {
@@ -66,8 +65,8 @@ async function getMediaPets() {
             throw new Error("Error getting ");
         }
 
-        const Usuarios = await peticion.json();
-        return Usuarios;
+        const mediaPets = await peticion.json();
+        return mediaPets;
 
     } catch (error) {
         console.error("there is a problem getting MediaPets", error);

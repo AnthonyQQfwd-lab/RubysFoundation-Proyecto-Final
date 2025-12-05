@@ -98,7 +98,7 @@ async function uploadAnimals() {
         }
         
         
-        console.log("Perros, gatos y paises cargados en las tablas:", newDogs, newCats, newCountries);
+        console.log("Perros, gatos y paises cargados en las tablas:", newDogs, newCats, country, state, city);
         
     } catch (error) {
         console.error("Error al cargar los animales:", error);
