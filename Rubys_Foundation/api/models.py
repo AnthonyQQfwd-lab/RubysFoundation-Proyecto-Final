@@ -179,10 +179,11 @@ class Reports (models.Model):
     adminDescription = models.CharField(max_length=500, blank=True, null= True)
     dateReport = models.DateField(default=timezone.now)
     reportGrade = models.ForeignKey(ReportsGrade, on_delete=models.CASCADE, blank=True, null= True)
+    reportedPublication = models.ForeignKey(Publications, on_delete=models.CASCADE, blank=True, null=True, related_name='publication_reported')
     reportedUser = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True, related_name='reports_as_reported')
     reporterUser = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_reporter')
-    moderator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_moderator')
-    administrator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_admin')
+    moderator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_moderator', blank=True, null=True)
+    administrator = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='reports_as_admin', blank=True, null=True)
 
 
 """

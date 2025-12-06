@@ -10,7 +10,8 @@ import LostPage from "../Pages/LostPage/LostPage";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 import PrivateRouting from "./PrivateRouting";
 import PostPage from "../Pages/PostPage/PostPage";
-
+import ReportPage from "../Pages/ReportPage/ReportPage";
+import HelpPage from "../Pages/HelpPage/HelpPage";
 function Routing() {
   return (
     <BrowserRouter>
@@ -25,6 +26,8 @@ function Routing() {
             <Route path="/Lost" element={<PrivateRouting><LostPage/></PrivateRouting>} />
             <Route path="/Profile" element={<PrivateRouting><ProfilePage/></PrivateRouting>} />
             <Route path="/Post" element={<PrivateRouting><PostPage/></PrivateRouting>} />
+            <Route path="/Report" element={<PrivateRouting><ReportPage/></PrivateRouting>} />
+            <Route path="/Help" element={<PrivateRouting><HelpPage/></PrivateRouting>} />
         </Routes>
     </BrowserRouter >
   )

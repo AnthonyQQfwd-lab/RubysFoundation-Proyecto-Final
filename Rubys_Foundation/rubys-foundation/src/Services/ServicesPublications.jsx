@@ -14,11 +14,11 @@ async function getPublications() {
             throw new Error("Error getting ");
         }
 
-        const Usuarios = await peticion.json();
-        return Usuarios;
+        const publications = await peticion.json();
+        return publications;
 
     } catch (error) {
-        console.error("there is a problem getting MediaPublications", error);
+        console.error("there is a problem getting publications", error);
         throw error;
     }
 }
