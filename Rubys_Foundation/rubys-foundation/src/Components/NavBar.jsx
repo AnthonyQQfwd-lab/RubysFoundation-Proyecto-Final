@@ -22,7 +22,7 @@ function NavBar() {
         <button onClick={() => navigate('/Donation')}>Donation</button>
         <button onClick={() => navigate('/Post')}>Post</button>
         <button onClick={LogOut}>Log out</button>
-        
+        <h3>{currentUser.firstName}</h3>
       </header>
     </div>
   )

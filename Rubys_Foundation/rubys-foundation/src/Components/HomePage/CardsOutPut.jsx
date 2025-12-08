@@ -7,16 +7,21 @@ import { getAnimals } from '../../Services/ServicesSpecies';
 import { getCountriesLocal } from '../../Services/ServicesCountriesData';
 import { getStatesLocal } from '../../Services/ServicesStatesData';
 import { getsCitiesLocal } from '../../Services/ServicesCitiesData';
+
+import { getUsers } from '../../Services/ServicesUsers';
+
 import '../../Styles/HomePage/HomePage.css';
 
 
 function CardsOutPut() {
+  const [pet, setPet] = useState({})
   const [pets, setPets] = useState([]);
   const [mediaPets, setMediaPets] = useState([]);
   const [publications, setPublications] = useState([]);
-
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState({})
   const [cities, setCities] = useState([]);
-  const [city, setCity] = useState({})
+  const [currentUserCity, setCityCurrentUserCity] = useState({})
 
   const [breeds, setBreeds] = useState([]);
 
@@ -35,6 +40,10 @@ function CardsOutPut() {
       setBreeds(breeds)
       const cities = await getsCitiesLocal();
       setCities(cities)
+      const users = await getUsers();
+      setUsers(users)
+      const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+      setCurrentUser(currentUser)
     }
     getData();
   }, []);
@@ -45,11 +54,6 @@ function CardsOutPut() {
     //este btn abrira otro modal el cual el dara la opcion de mandar un mensaje al otro usuario creando asi con chat con el o directamentea brir el chat 
     console.log("funciona el btn contact")
   }
-
-
-
-   
-
   const openModalFullInformationPet = () => {
     
     dialogFullInformation.current.showModal();
@@ -77,56 +81,117 @@ function CardsOutPut() {
     dialogOptions.current.close();
   };
 
-
-  
-
-
-  
-  /*
-  construir el funcionamiento de los reportes
-
-  const report = {
-    problem: problem,
-    userDescription: userDescription,
-
-    moderatorDescription: "",
-    adminDescription: "",
-
-  
-    reportGrade: 1,  esto en default ya que es un reporte hecho por un usuario 
-    // se puede quedar uno de los 2 vacios en reprotedPublication y reportedUser, porque se puede reportar a una publication o a un usuario 
-    reportedPublication: id de la publicacion reportada 
-    reportedUser: id del usuario reportado,
-    reporterUser: id del usuario que reporto,
-    moderator: id del moderador que acepto el report del usuario 
-    administrator> id del administrador que aprobo el report aceptado por el moderador 
-
-    dateReport: Date.now(),
+  function toRad(coordinate){
+    return coordinate * Math.PI / 180;
   }
 
+  const lat1 = 9.97625000;
+  const lat2 = 9.79617000; 
+  const lon1 = -84.83836000;
+  const lon2 = -83.85383000;
 
-  de un select de problemas que son comunes en reportes se tomara uno, el que el suer condicere mas aproximado al reporte 
-  luego se le pediraw una descripcion al usuario, userDescription
-
-  las descriptions de moderator y admin quedan en blanco porque aun no interactuan con ese report ninguno de ellos
-  date report es la fecha de creacion de ese report 
-
-  report grade es al grado del report, por defecto esta 1 porque es un report hecho por un usuario 
-  y el reported user el cual es el usuario reportado 
-
+  const distance = calculatedDistances(lat1, lat2, lon1, lon2);
   
-  */
+  function calculatedDistances(lat1, lat2, lon1, lon2) {
+    const R = 6371; 
+
+    const lat1Rad = toRad(lat1);
+    const lat2Rad = toRad(lat2);
+    const lon1Rad = toRad(lon1);
+    const lon2Rad = toRad(lon2);
+
+    const dLat = lat2Rad - lat1Rad;   
+    const dLon = lon2Rad - lon1Rad;  
+
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat1Rad) * Math.cos(lat2Rad) *
+      Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = R * c;
+    distance.toFixed(1)
+
+    if(distance === 0.0){
+      return "At the same city"
+    }
+    else if(distance < 1){
+      return distance.toFixed(1) * 1000 + " meters"
+    }
+    else if( distance > 1 ){
+      return distance.toFixed(1) + " km"
+    }
+
+  }
+
 
 
   return (
     <div id="cardsContainer">
+      {pets.filter(pet => pet.status === "Adopcion").map((pet) => { 
+        const userCity = cities.find(city => city.id === Number(currentUser.city)); 
+
+        const anotherUser = users.find(user => user.id === pet.keeper)
+        if(!keeper)
+            return
+        
+        const mediaPet = mediaPets.find(mediaPet => mediaPet.pet === pet.id);
+        const breed = breeds.find(breeds => breeds.id === pet.breed);
+        const publication = publications.find(publication => publication.pet === pet.id);
+        
+        const anotherCity = anotherUser?.city? cities.find(city => city.id === Number(anotherUser.city)): null;
+
+        let distance = null;
+        if (userCity && anotherCity && userCity.latitude && userCity.longitude && anotherCity.latitude && anotherCity.longitude) {distance = calculatedDistances( userCity.latitude, anotherCity.latitude, userCity.longitude, anotherCity.longitude);}
+
+
+
+        
+
+
+      })}
+
+
+
+
+
+
+
+
+
+
+
+
+        {/*
         {pets.filter(pet => pet.status === "Adopcion").map((pet) => {
-          const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+          const anotherUser = users.find(user => user.id === pet.keeper)
+
+          if(!anotherUser)
+            return
+
           const mediaPet = mediaPets.find(mediaPet => mediaPet.pet === pet.id);
-          const breed = breeds.find(b => b.id === pet.breed);
-          const city = cities.find(c => c.id === Number(currentUser.city));
+          const breed = breeds.find(breeds => breeds.id === pet.breed);
+          const city = cities.find(city => city.id === Number(currentUser.city)); 
           const publication = publications.find(publication => publication.pet === pet.id);
-          {console.table(publication)}
+        
+          const anotherCity = anotherUser?.city
+            ? cities.find(city => city.id === Number(anotherUser.city))
+            : null;
+
+
+          let distance = null;
+          
+          if (city && anotherCity && city.latitude && city.longitude && anotherCity.latitude && anotherCity.longitude) {
+            distance = calculatedDistances(
+              city.latitude,
+              anotherCity.latitude,
+              city.longitude,
+              anotherCity.longitude
+            );
+          }
+          
+          
+
           return (
                 
               <div key={pet.id} className="cards">
@@ -134,7 +199,7 @@ function CardsOutPut() {
                   <h4>{pet.name}</h4>
                   <p> breed: {breed ? breed.name : "without breed"}</p>
                   {mediaPet && <img id="imgModalFullInformation" src={mediaPet.imagen} alt={pet.name}  />} 
-                  <p>{city ? city.name : "without city "}   {/*realizar funcion que mida la distancia con la latitude y la longitude de city*/ }</p>
+                  <p>{city ? city.name : "without city "}    {/*realizar funcion que mida la distancia con la latitude y la longitude de city }</p>
                   <p>age - {pet.age}</p>
                   <h2>Description:</h2>
                   <p>{publication?.description ?? "Sin descripción disponible"}</p>
@@ -151,16 +216,15 @@ function CardsOutPut() {
                 </div>
                 <div id="nameContainer"><h4>{pet.name}</h4> <img src={breed?.specieBreed === 1? "../../../public/images/PostPage/cat_button.png" : "../../../public/images/PostPage/dog_button.png"} alt={breed?.specieBreed === 1 ? "Gato" : "Perro"}/> </div>
                 <p>{breed ? breed.name : "without breed"} - {pet.age}</p>
-                <p>{city ? city.name : "without city "}   {/*realizar funcion que mida la distancia con la latitude y la longitude de city*/ }</p>
+                <p>{anotherCity ? anotherCity.name : "without city "} - {distance}   {/*realizar funcion que mida la distancia con la latitude y la longitude de city }</p>
                 <p>Vaccinated: {pet.vaccinated ?? "sin dato"}</p>
-                <div id="btnContainer"><button onClick={openModalFullInformationPet}>see more</button><button onClick={contact}>Contact</button></div>
+                <div id="btnContainer"><button  onClick={() => {  openModalFullInformationPet();  setPet(pet);}} >  see more </button><button onClick={contact}>Contact</button></div>
                   
               </div>
           );
         })}
 
-
-
+      */}
     </div>
   );
 }
