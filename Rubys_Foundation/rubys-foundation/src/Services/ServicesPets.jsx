@@ -23,6 +23,29 @@ async function getPets() {
     }
 }
 
+//(GET)
+async function getPet(id) {
+    try {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/pets/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const pet = await peticion.json();
+        return pet;
+
+    } catch (error) {
+        console.error("there is a problem getting MediaPets", error);
+        throw error;
+    }
+}
+
 //(POST)
 async function createPets(newUser) {
     try {
@@ -94,4 +117,4 @@ async function deletePets(id) {
 }
 
 
-export { getPets, createPets, updatePets, deletePets};
+export { getPets, createPets, updatePets, deletePets, getPet};

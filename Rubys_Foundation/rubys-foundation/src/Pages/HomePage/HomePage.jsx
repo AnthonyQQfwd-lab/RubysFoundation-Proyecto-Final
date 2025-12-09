@@ -6,7 +6,7 @@ function HomePage() {
   return (
     <div >
         <header><NavBar /></header>
-        <div id="cardsOutPutContainer"><CardsOutPut /></div>
+        <div><CardsOutPut /></div>
         
 
 

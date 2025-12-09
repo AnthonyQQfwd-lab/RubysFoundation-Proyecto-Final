@@ -36,8 +36,8 @@ async function getUser(id) {
             throw new Error("Error getting user ");
         }
 
-        const Usuarios = await peticion.json();
-        return Usuarios;
+        const user = await peticion.json();
+        return user;
 
     } catch (error) {
         console.error("there is a problem getting users", error);

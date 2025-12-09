@@ -1,0 +1,10 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(10, 10, 10);
+}
+
+
+#reportFormContaine{
+    background-color: red;
+}

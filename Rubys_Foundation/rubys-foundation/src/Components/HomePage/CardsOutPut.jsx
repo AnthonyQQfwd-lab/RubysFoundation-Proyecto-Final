@@ -14,7 +14,19 @@ import '../../Styles/HomePage/HomePage.css';
 
 
 function CardsOutPut() {
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  //datos para cargar y enseñarlo a la hora de consultar la informacion completa de la pet
   const [pet, setPet] = useState({})
+  const [breed, setBreed] = useState({})
+  const [keeper, setKeeper] = useState({})
+  const [mediaPet, setMediaPet] = useState({})
+  const [keeperCity, setKeeperCity] = useState({})
+  const [publication, setPublication] = useState({})
+  const [distance, setDistance]= useState("")
+
+
   const [pets, setPets] = useState([]);
   const [mediaPets, setMediaPets] = useState([]);
   const [publications, setPublications] = useState([]);
@@ -22,7 +34,6 @@ function CardsOutPut() {
   const [currentUser, setCurrentUser] = useState({})
   const [cities, setCities] = useState([]);
   const [currentUserCity, setCityCurrentUserCity] = useState({})
-
   const [breeds, setBreeds] = useState([]);
 
   const dialogOptions = useRef(null);
@@ -31,6 +42,7 @@ function CardsOutPut() {
   useEffect(() => {
     async function getData() {
       const petsData = await getPets();
+      console.log(pets)
       setPets(petsData);
       const mediaData = await getMediaPets();
       setMediaPets(mediaData);
@@ -54,6 +66,7 @@ function CardsOutPut() {
     //este btn abrira otro modal el cual el dara la opcion de mandar un mensaje al otro usuario creando asi con chat con el o directamentea brir el chat 
     console.log("funciona el btn contact")
   }
+
   const openModalFullInformationPet = () => {
     
     dialogFullInformation.current.showModal();
@@ -68,7 +81,6 @@ function CardsOutPut() {
    * Abre el modal para seleccionar la raza de la mascota
    */
   const openModalOptions = () => {
-    
     dialogOptions.current.showModal();
     
   };
@@ -84,13 +96,6 @@ function CardsOutPut() {
   function toRad(coordinate){
     return coordinate * Math.PI / 180;
   }
-
-  const lat1 = 9.97625000;
-  const lat2 = 9.79617000; 
-  const lon1 = -84.83836000;
-  const lon2 = -83.85383000;
-
-  const distance = calculatedDistances(lat1, lat2, lon1, lon2);
   
   function calculatedDistances(lat1, lat2, lon1, lon2) {
     const R = 6371; 
@@ -125,106 +130,111 @@ function CardsOutPut() {
   }
 
 
+  const openOptionsMenu = (event, publication) => {
+    const rect = event.target.getBoundingClientRect(); 
+
+    setMenuPosition({
+      top: rect.bottom + window.scrollY,
+      left: rect.right + window.scrollX - 150 
+    });
+
+    setPublication(publication);            
+    setMenuOpen(true);
+
+
+    setMenuOpen(true);
+  };
+
+  const closeMenu = () => setMenuOpen(false);
+
 
   return (
-    <div id="cardsContainer">
-      {pets.filter(pet => pet.status === "Adopcion").map((pet) => { 
-        const userCity = cities.find(city => city.id === Number(currentUser.city)); 
+    <div>
 
-        const anotherUser = users.find(user => user.id === pet.keeper)
-        if(!keeper)
-            return
-        
-        const mediaPet = mediaPets.find(mediaPet => mediaPet.pet === pet.id);
-        const breed = breeds.find(breeds => breeds.id === pet.breed);
-        const publication = publications.find(publication => publication.pet === pet.id);
-        
-        const anotherCity = anotherUser?.city? cities.find(city => city.id === Number(anotherUser.city)): null;
+      {menuOpen && (
+        <div
+          className="optionsMenu"
+          style={{
+            top: menuPosition.top,
+            left: menuPosition.left
+          }}
+        >
+          {console.log(keeper)}
+          <Link to="/Report" state={{ publication }}><button onClick={() => { closeMenu();  }}>Report publication</button></Link>
+          <Link to="/Help" state={{  }} ><button onClick={() => { closeMenu(); }}>Help</button></Link>
+          <button onClick={closeMenu}>X</button>
+        </div>
+      )}
+      <dialog ref={dialogFullInformation} id='fullInformationDialog'>
 
-        let distance = null;
-        if (userCity && anotherCity && userCity.latitude && userCity.longitude && anotherCity.latitude && anotherCity.longitude) {distance = calculatedDistances( userCity.latitude, anotherCity.latitude, userCity.longitude, anotherCity.longitude);}
+        <h4>{pet.name} {pet.age} year/s</h4>
+        <p>{breed ? breed.name : "without breed"}</p>
+        {mediaPet && <img id="imgModalFullInformation" src={mediaPet.imagen} alt={pet.name}  />} 
+        <p>{keeperCity ? keeperCity.name : "without city"} - {distance} {/*realizar funcion que mida la distancia con la latitude y la longitude de city */}</p>
+
+        <h2>Description:</h2>
+        <p>{publication?.description ?? "Sin descripción disponible"}</p>
+        <p>Keeper: {keeper.firstName}</p>
+        <button onClick={closeModalFullInformation}>X</button>
+      </dialog>
+
+      <dialog ref={dialogOptions} id='optionsDialog'>
+        <Link to="/Report" state={{ currentUser, keeper,  }} ><button >Report</button></Link>
+        <Link to="/Help"><button >Help</button></Link>
+        <button onClick={closeModalOptions}>X</button>
+      </dialog>
 
 
+      {/*------------------------------------------ */}
+      <div id="cardsContainer">
 
-        
-
-
-      })}
-
-
-
-
-
-
-
-
-
-
-
-
-        {/*
-        {pets.filter(pet => pet.status === "Adopcion").map((pet) => {
-          const anotherUser = users.find(user => user.id === pet.keeper)
-
-          if(!anotherUser)
-            return
+      
+        {pets.filter(pet => pet.status === "Adopcion").map((pet) => { 
+          const userCity = cities.find(city => city.id === Number(currentUser.city)); 
+          const anotherUser = users.find(user => user.id === pet.keeper);
+          if (!anotherUser) return null;
 
           const mediaPet = mediaPets.find(mediaPet => mediaPet.pet === pet.id);
           const breed = breeds.find(breeds => breeds.id === pet.breed);
-          const city = cities.find(city => city.id === Number(currentUser.city)); 
           const publication = publications.find(publication => publication.pet === pet.id);
-        
-          const anotherCity = anotherUser?.city
-            ? cities.find(city => city.id === Number(anotherUser.city))
-            : null;
-
+          const anotherCity = anotherUser?.city ? cities.find(city => city.id === Number(anotherUser.city)) : null;
 
           let distance = null;
-          
-          if (city && anotherCity && city.latitude && city.longitude && anotherCity.latitude && anotherCity.longitude) {
-            distance = calculatedDistances(
-              city.latitude,
-              anotherCity.latitude,
-              city.longitude,
-              anotherCity.longitude
-            );
+          if (userCity && anotherCity && userCity.latitude && userCity.longitude && anotherCity.latitude && anotherCity.longitude) {
+            distance = calculatedDistances(userCity.latitude, anotherCity.latitude, userCity.longitude, anotherCity.longitude);
           }
-          
-          
 
-          return (
-                
-              <div key={pet.id} className="cards">
-                <dialog ref={dialogFullInformation} id='fullInformationDialog'>
-                  <h4>{pet.name}</h4>
-                  <p> breed: {breed ? breed.name : "without breed"}</p>
-                  {mediaPet && <img id="imgModalFullInformation" src={mediaPet.imagen} alt={pet.name}  />} 
-                  <p>{city ? city.name : "without city "}    {/*realizar funcion que mida la distancia con la latitude y la longitude de city }</p>
-                  <p>age - {pet.age}</p>
-                  <h2>Description:</h2>
-                  <p>{publication?.description ?? "Sin descripción disponible"}</p>
-                  <button onClick={closeModalFullInformation}>X</button>
-                </dialog>
-                <div id="imageContainer">
-                  {mediaPet && <img src={mediaPet.imagen} alt={pet.name} width="150" />} 
-                  <button onClick={openModalOptions}>⋮</button>
-                  <dialog ref={dialogOptions} id='optionDialog'>
-                    <Link to="/Report" state={{  }} ><button >Report</button></Link>
-                    <Link to="/Help"><button >Help</button></Link>
-                    <button onClick={closeModalOptions}>X</button>
-                  </dialog>
-                </div>
-                <div id="nameContainer"><h4>{pet.name}</h4> <img src={breed?.specieBreed === 1? "../../../public/images/PostPage/cat_button.png" : "../../../public/images/PostPage/dog_button.png"} alt={breed?.specieBreed === 1 ? "Gato" : "Perro"}/> </div>
-                <p>{breed ? breed.name : "without breed"} - {pet.age}</p>
-                <p>{anotherCity ? anotherCity.name : "without city "} - {distance}   {/*realizar funcion que mida la distancia con la latitude y la longitude de city }</p>
-                <p>Vaccinated: {pet.vaccinated ?? "sin dato"}</p>
-                <div id="btnContainer"><button  onClick={() => {  openModalFullInformationPet();  setPet(pet);}} >  see more </button><button onClick={contact}>Contact</button></div>
-                  
+          return (  
+            
+            <div key={pet.id} className="cards">
+              <div id="imageContainer">
+                {mediaPet && <img src={mediaPet.imagen} alt={pet.name} width="150" />} 
+                <button className="optionsBtn" onClick={(e) => openOptionsMenu(e, publication)}>⋮</button>
               </div>
+              <div id="nameContainer">
+                <h4>{pet.name}</h4> 
+                <img src={breed?.specieBreed === 1 ? "../../../public/images/PostPage/cat_button.png" : "../../../public/images/PostPage/dog_button.png"} alt={breed?.specieBreed === 1 ? "Gato" : "Perro"} />
+              </div>
+              <p>{breed ? breed.name : "without breed"} - {pet.age}</p>
+              <p>{anotherCity ? anotherCity.name : "without city"} - {distance}</p>
+              <p>Vaccinated: {pet.vaccinated ?? "sin dato"}</p>
+              <div id="btnContainer">
+                <button onClick={() => { 
+                  openModalFullInformationPet();  
+                  setPet(pet); 
+                  setBreed(breed); 
+                  setMediaPet(mediaPet); 
+                  setPublication(publication); 
+                  setKeeperCity(anotherCity); 
+                  setKeeper(anotherUser)
+                  setDistance(distance)
+                }}>see more</button>
+                <button onClick={contact}>Contact</button>
+              </div>
+            </div>
           );
         })}
-
-      */}
+      </div>
     </div>
   );
 }
