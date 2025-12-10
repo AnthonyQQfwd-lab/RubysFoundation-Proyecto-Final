@@ -1,4 +1,7 @@
 import React from "react";
+import PrivateRouting from "./PrivateRouting";
+import ModeratorsRouting from "./ModeratorsRouting";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
@@ -8,10 +11,10 @@ import DionationPage from "../Pages/DonationPage/DionationPage";
 import InformationPage from "../Pages/InformationPage/InformationPage";
 import LostPage from "../Pages/LostPage/LostPage";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
-import PrivateRouting from "./PrivateRouting";
 import PostPage from "../Pages/PostPage/PostPage";
 import ReportPage from "../Pages/ReportPage/ReportPage";
 import HelpPage from "../Pages/HelpPage/HelpPage";
+import ModeratorPage from "../Pages/ModeratorPage/ModeratorPage";
 function Routing() {
   return (
     <BrowserRouter>
@@ -28,6 +31,7 @@ function Routing() {
             <Route path="/Post" element={<PrivateRouting><PostPage/></PrivateRouting>} />
             <Route path="/Report" element={<PrivateRouting><ReportPage/></PrivateRouting>} />
             <Route path="/Help" element={<PrivateRouting><HelpPage/></PrivateRouting>} />
+            <Route path="/ModDashboard" element={<ModeratorsRouting><ModeratorPage/></ModeratorsRouting>} />
         </Routes>
     </BrowserRouter >
   )

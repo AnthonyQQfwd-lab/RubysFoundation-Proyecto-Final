@@ -50,7 +50,8 @@ function ReportForm() {
     }
     console.log(newReport)
     const report = await createReport(newReport)
-    console.log(report)
+    
+    console.log("report creado", report)
   }
 
   function ver(){

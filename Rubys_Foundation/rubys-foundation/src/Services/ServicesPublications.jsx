@@ -23,6 +23,28 @@ async function getPublications() {
     }
 }
 
+async function getPublication() {
+    try {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/publications/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const publication = await peticion.json();
+        return publication;
+
+    } catch (error) {
+        console.error("there is a problem getting publications", error);
+        throw error;
+    }
+}
+
 //(POST)
 async function createPublications(newUser) {
     try {
@@ -94,4 +116,4 @@ async function deletePublications(id) {
 }
 
 
-export { getPublications, createPublications, updatePublications, deletePublications};
+export { getPublications, createPublications, updatePublications, deletePublications, getPublication};

@@ -6,10 +6,7 @@ function HomePage() {
   return (
     <div >
         <header><NavBar /></header>
-        <div><CardsOutPut /></div>
-        
-
-
+        <CardsOutPut publicationsType="Adopcion" />
     </div>
   )
 }

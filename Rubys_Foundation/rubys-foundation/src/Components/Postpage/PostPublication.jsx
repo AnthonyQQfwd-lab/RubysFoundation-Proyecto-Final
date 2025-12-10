@@ -17,7 +17,7 @@ function PostPublication() {
   const [breedId, setBreedId] = useState('');
   const [specie, setSpecie] = useState('');
   const [isVaccinated, setIsVaccinated] = useState('');
-  const [status, setStatus] = useState('Unknown');
+  const [status, setStatus] = useState("Unknown");
   
   // Estados para información de la publicación
   const [reward, setReward] = useState('');

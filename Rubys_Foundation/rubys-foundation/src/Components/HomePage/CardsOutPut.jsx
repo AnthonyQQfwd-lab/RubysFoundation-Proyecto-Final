@@ -13,7 +13,7 @@ import { getUsers } from '../../Services/ServicesUsers';
 import '../../Styles/HomePage/HomePage.css';
 
 
-function CardsOutPut() {
+function CardsOutPut({publicationsType}) {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
@@ -159,7 +159,6 @@ function CardsOutPut() {
             left: menuPosition.left
           }}
         >
-          {console.log(keeper)}
           <Link to="/Report" state={{ publication }}><button onClick={() => { closeMenu();  }}>Report publication</button></Link>
           <Link to="/Help" state={{  }} ><button onClick={() => { closeMenu(); }}>Help</button></Link>
           <button onClick={closeMenu}>X</button>
@@ -189,7 +188,7 @@ function CardsOutPut() {
       <div id="cardsContainer">
 
       
-        {pets.filter(pet => pet.status === "Adopcion").map((pet) => { 
+        {pets.filter(pet => pet.status === publicationsType).map((pet) => { 
           const userCity = cities.find(city => city.id === Number(currentUser.city)); 
           const anotherUser = users.find(user => user.id === pet.keeper);
           if (!anotherUser) return null;
@@ -209,7 +208,14 @@ function CardsOutPut() {
             <div key={pet.id} className="cards">
               <div id="imageContainer">
                 {mediaPet && <img src={mediaPet.imagen} alt={pet.name} width="150" />} 
-                <button className="optionsBtn" onClick={(e) => openOptionsMenu(e, publication)}>⋮</button>
+                {pet.keeper !== Number(currentUser.id) ? (
+                  <button
+                    className="optionsBtn"
+                    onClick={(e) => openOptionsMenu(e, publication)}
+                  >
+                    ⋮
+                  </button>
+                ) : null}
               </div>
               <div id="nameContainer">
                 <h4>{pet.name}</h4> 

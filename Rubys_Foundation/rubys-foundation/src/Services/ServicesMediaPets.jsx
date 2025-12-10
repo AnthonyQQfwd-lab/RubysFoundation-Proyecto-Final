@@ -74,6 +74,8 @@ async function getMediaPets() {
     }
 }
 
+
+
 //(POST)
 async function createMediaPets(newUser) {
     try {
