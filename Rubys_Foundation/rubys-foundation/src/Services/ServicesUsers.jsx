@@ -103,7 +103,7 @@ async function createusersdjango(newUser) {
 //(PUT || PATCH)
 async function updateUsers(id, updateData) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}/`, {
             method: 'PATCH', 
             headers: {
                 'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ async function updateUsers(id, updateData) {
 //(DELETE)
 async function deleteUsers(id) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/users/${id}/`, {
             method: 'DELETE'
         });
 

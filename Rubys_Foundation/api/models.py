@@ -42,7 +42,7 @@ con datos importantes como su ubicacion, parametros para iniciar sesion y a cuan
 class Users (models.Model):
     firstName = models.CharField(max_length=50)
     lastName = models.CharField(max_length=50)
-    username = models.CharField(max_length=20, unique=True)
+    username = models.CharField(max_length=50, unique=True)
     phoneNumber = models.CharField(max_length=20)
     country = models.CharField(max_length=100)
     state = models.CharField(max_length=100)

@@ -12,7 +12,6 @@ import '../../Styles/ModeratorPage/ModeratorPage.css';
 function ReportsOutput({reportGrade}) {
     const confirmApproveDialog = useRef(null)
     const confirmDenyDialog = useRef(null)
-    reportGrade = 1
     const [reports, setReports] = useState([])
     const [publications, setPublications] = useState([])
     const [users, setUsers] = useState([])
@@ -45,8 +44,17 @@ function ReportsOutput({reportGrade}) {
                 reportGrade: 2,                     
                 moderator: Number(currentUser.id)   
             };
+
+            const reporteduser = getUser(report.reportedUser)
+            console.log(reporteduser)
+            const userUpdate = {
+                ...reporteduser,
+                isHidden: true   
+            }
             const updatedReport = await updateReport(report.id, reportUpdate);
-            console.log(updateReport)
+            const updatedUser = await updateUsers(report.reportedUser, userUpdate)
+            console.log(updatedUser)
+            console.log(updatedReport)
         }
         else if(reportGrade === 2){
             const reportUpdate = {
@@ -54,8 +62,13 @@ function ReportsOutput({reportGrade}) {
                 reportGrade: 3,                     
                 administrator: Number(currentUser.id)   
             };
+
+            const reporteduser = getUser(report.reportedUser)
+            console.log(reporteduser)
+
             const userUpdate = {
-                isBanned: true
+                ...reporteduser,
+                isHidden: true   
             }
             const updatedUser = await updateUsers(report.reportedUser, userUpdate)
             const updatedReport = await updateReport(report.id, reportUpdate);
@@ -80,8 +93,14 @@ function ReportsOutput({reportGrade}) {
                 reportGrade: 4,                     
                 moderator: Number(currentUser.id)   
             };
+            const userUpdate = {
+                isHidden: false
+            }
             const updatedReport = await updateReport(report.id, reportUpdate);
-            console.log(updateReport)
+            const updatedUser = await updateUsers(report.reportedUser, userUpdate)
+            console.log(updatedUser)
+            console.log(updatedReport)
+            
         }
         else if(reportGrade === 2){
             const reportUpdate = {
@@ -153,7 +172,6 @@ function ReportsOutput({reportGrade}) {
                 const reportedUser = users.find(user => user.id == report.reportedUser)
                 const reporterUser = users.find(user => user.id == report.reporterUser)
                 const publication = publications.find(publication => publication.id === report.reportedPublication)
-                console.table(report)
                 return (
                     <div key={report.id} className='reportCards'>
                         <h2>{report.problem} Report </h2>

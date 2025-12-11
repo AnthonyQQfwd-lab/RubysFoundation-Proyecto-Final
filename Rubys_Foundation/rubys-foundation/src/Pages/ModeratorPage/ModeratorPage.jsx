@@ -7,7 +7,7 @@ function ModeratorPage() {
   return (
     <div>
         <div id="reportsOutPutContainer">
-          <ReportsOutput />
+          <ReportsOutput reportGrade={1} />
         </div>
          
     </div>

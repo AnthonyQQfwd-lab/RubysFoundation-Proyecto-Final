@@ -194,7 +194,7 @@ function CardsOutPut({publicationsType}) {
           if (!anotherUser) return null;
           if(anotherUser.isHidden === true) return null;
           if(anotherUser.id === Number(currentUser.id)) return null;
-
+          
 
           const mediaPet = mediaPets.find(mediaPet => mediaPet.pet === pet.id);
           const breed = breeds.find(breeds => breeds.id === pet.breed);

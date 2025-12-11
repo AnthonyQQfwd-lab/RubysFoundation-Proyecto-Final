@@ -15,6 +15,7 @@ import PostPage from "../Pages/PostPage/PostPage";
 import ReportPage from "../Pages/ReportPage/ReportPage";
 import HelpPage from "../Pages/HelpPage/HelpPage";
 import ModeratorPage from "../Pages/ModeratorPage/ModeratorPage";
+import AdminPage from "../Pages/AdminPage/AdminPage";
 function Routing() {
   return (
     <BrowserRouter>
@@ -31,7 +32,8 @@ function Routing() {
             <Route path="/Post" element={<PrivateRouting><PostPage/></PrivateRouting>} />
             <Route path="/Report" element={<PrivateRouting><ReportPage/></PrivateRouting>} />
             <Route path="/Help" element={<PrivateRouting><HelpPage/></PrivateRouting>} />
-            <Route path="/ModDashboard" element={<ModeratorsRouting><ModeratorPage/></ModeratorsRouting>} />
+            <Route path="/ModDashboard" element={<ModeratorsRouting userType={2}><ModeratorPage /></ModeratorsRouting>} />
+            <Route path="/AdminDashboard" element={<ModeratorsRouting userType={3}><AdminPage /></ModeratorsRouting>} />
         </Routes>
     </BrowserRouter >
   )
