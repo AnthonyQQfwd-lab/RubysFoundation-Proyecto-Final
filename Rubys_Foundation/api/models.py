@@ -49,8 +49,8 @@ class Users (models.Model):
     city = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=256)
-
-
+    isBanned = models.BooleanField(default=False)
+    isHidden = models.BooleanField(default=False)
 
     petsHelped = models.IntegerField(default=0)
     petsAdopted = models.IntegerField(default=0)

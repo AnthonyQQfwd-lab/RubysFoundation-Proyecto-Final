@@ -9,3 +9,65 @@ h1 {
     font-size: 100px;
 }
 
+
+#reportsOutPutContainer{
+    display: grid;
+    place-items: center;       
+    height: 100vh;
+}
+
+#reportsCardsContainer{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;       
+    justify-content: center; 
+}
+
+#confirmApproveDialog {
+    position: fixed;     
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 20px;
+    border: none;
+    border-radius: 12px;
+}
+
+#confirmDenyDialog{
+    position: fixed;     
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 20px;
+    border: none;
+    border-radius: 12px;
+}
+
+
+
+.commentBox {
+    width: 100%;
+    min-height: 100px;
+    resize: none;
+    overflow: auto;
+    padding: 8px;
+    font-size: 16px;
+}
+
+#confirmApproveDialogContainer{
+         
+
+}
+
+#confirmDenyDialog button.closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+

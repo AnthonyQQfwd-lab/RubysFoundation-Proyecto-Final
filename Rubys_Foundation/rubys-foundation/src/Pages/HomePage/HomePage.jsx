@@ -6,7 +6,10 @@ function HomePage() {
   return (
     <div >
         <header><NavBar /></header>
-        <CardsOutPut publicationsType="Adopcion" />
+        <div id="cardsOutPutContainer">
+          <CardsOutPut publicationsType="Adopcion" />
+        </div>
+        
     </div>
   )
 }

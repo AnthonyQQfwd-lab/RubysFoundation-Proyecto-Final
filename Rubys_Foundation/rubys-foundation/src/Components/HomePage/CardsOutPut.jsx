@@ -42,7 +42,6 @@ function CardsOutPut({publicationsType}) {
   useEffect(() => {
     async function getData() {
       const petsData = await getPets();
-      console.log(pets)
       setPets(petsData);
       const mediaData = await getMediaPets();
       setMediaPets(mediaData);
@@ -191,7 +190,11 @@ function CardsOutPut({publicationsType}) {
         {pets.filter(pet => pet.status === publicationsType).map((pet) => { 
           const userCity = cities.find(city => city.id === Number(currentUser.city)); 
           const anotherUser = users.find(user => user.id === pet.keeper);
+
           if (!anotherUser) return null;
+          if(anotherUser.isHidden === true) return null;
+          if(anotherUser.id === Number(currentUser.id)) return null;
+
 
           const mediaPet = mediaPets.find(mediaPet => mediaPet.pet === pet.id);
           const breed = breeds.find(breeds => breeds.id === pet.breed);
@@ -202,6 +205,8 @@ function CardsOutPut({publicationsType}) {
           if (userCity && anotherCity && userCity.latitude && userCity.longitude && anotherCity.latitude && anotherCity.longitude) {
             distance = calculatedDistances(userCity.latitude, anotherCity.latitude, userCity.longitude, anotherCity.longitude);
           }
+
+
 
           return (  
             

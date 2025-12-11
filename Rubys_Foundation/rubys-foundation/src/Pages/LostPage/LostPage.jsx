@@ -6,7 +6,7 @@ function LostPage() {
     <div>
         <NavBar />
         <CardsOutPut publicationsType="Lost" />
-        LostPage
+        <CardsOutPut publicationsType="Wanted" />
     </div>
   )
 }

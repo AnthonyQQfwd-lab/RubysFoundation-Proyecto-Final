@@ -53,8 +53,8 @@ async function createReport(newReport) {
 //(PUT || PATCH)
 async function updateReport(id, updateData) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/reports/${id}`, {
-            method: 'PATCH', 
+        const peticion = await fetch(`http://127.0.0.1:8000/api/reports/${id}/`, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -62,14 +62,15 @@ async function updateReport(id, updateData) {
         });
 
         if (!peticion.ok) {
-            throw new Error("Error updating user");
+            const text = await peticion.text();
+            console.error("Server error:", text);
+            throw new Error("Error updating report");
         }
 
-        const updateUser = await peticion.json();
-        return updateUser;
+        return await peticion.json();
 
     } catch (error) {
-        console.error("Error updating user", error);
+        console.error("Error updating report", error);
         throw error;
     }
 }
