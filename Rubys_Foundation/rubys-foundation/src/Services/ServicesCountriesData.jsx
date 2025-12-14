@@ -76,6 +76,31 @@ async function getCountriesLocal() {
     }
 }
 
+async function getCountryByUser(user) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/countries/', {
+            method: 'GET',
+            headers: {
+                "X-CSCAPI-KEY": API_KEY,
+                'Content-Type': 'application/json',
+                
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const countries = await peticion.json();
+        const country = countries.find(country => country.id === Number(user.country))
+        return country;
+
+    } catch (error) {
+        console.error("there is a problem getting Countries", error);
+        throw error;
+    }
+}
+
 
 async function createCountry(newCountry) {
     try {
@@ -105,4 +130,4 @@ async function createCountry(newCountry) {
     }
 }
 
-export {getCountries, createCountry, getCountriesLocal, getCountry}
+export {getCountries, createCountry, getCountriesLocal, getCountry, getCountryByUser}

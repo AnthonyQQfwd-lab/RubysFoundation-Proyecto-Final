@@ -9,7 +9,10 @@ import { getMediaBreeds } from '../../Services/ServicesMediaBreeds';
 
 import '../../Styles/PostPage/PostPage.css';
 
-function PostPublication() {
+function PostPublication({publication}) {
+  if(publication){
+    console.log(publication)
+  }
   // Estados para información de la mascota
   const [name, setName] = useState('');
   const [age, setAge] = useState(0);
@@ -101,21 +104,21 @@ function PostPublication() {
         formData.append('imagen', image);
 
         try {
-        const response = await axios.post(
-            'http://127.0.0.1:8000/api/mediaPets/',
-            formData,
-            {
-            headers: { 'Content-Type': 'multipart/form-data' },
-            }
-        );
-        console.log('Imagen subida:', response.data);
-        return response.data.imagen;
+          const response = await axios.post(
+              'http://127.0.0.1:8000/api/mediaPets/',
+              formData,
+              {
+              headers: { 'Content-Type': 'multipart/form-data' },
+              }
+          );
+          console.log('Imagen subida:', response.data);
+          return response.data.imagen;
         } catch (err) {
         console.error('Error subiendo imagen:', err);
         return null;
         }
     };
-
+    
   /**
    * Crea una nueva publicación con toda la información de la mascota
    * Proceso:

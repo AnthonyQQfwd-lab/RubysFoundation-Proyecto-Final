@@ -103,6 +103,32 @@ async function createMediaPets(newUser) {
 }
 
 
+
+
+async function getMediaPetByPet(pet) {
+    try {
+        const peticion = await fetch('http://127.0.0.1:8000/api/mediaPets/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const mediaPets = await peticion.json();
+        const mediapet = mediaPets.find(mediaPet => mediaPet.pet === pet.id)
+
+        return mediapet;
+
+    } catch (error) {
+        console.error("there is a problem getting MediaPets", error);
+        throw error;
+    }
+}
+
 //(PUT || PATCH)
 async function updateMediaPets(id, updateData) {
     try {
@@ -146,4 +172,4 @@ async function deleteMediaPets(id) {
     }
 }
 
-export { getMediaPets, createMediaPets, updateMediaPets, deleteMediaPets};
+export { getMediaPets, createMediaPets, updateMediaPets, deleteMediaPets, getMediaPetByPet};

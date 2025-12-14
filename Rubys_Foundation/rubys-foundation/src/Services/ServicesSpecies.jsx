@@ -177,5 +177,50 @@ async function getAnimals() {
 }
 
 
+async function getAnimalByPet(pet) {
+  try {
+    const peticion = await fetch("http://127.0.0.1:8000/api/breeds/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-export { getDogs, getDog, getCats, getCat, createDogs, createAnimals, getAnimals };
+    if (!peticion.ok) {
+      throw new Error("Error getting dogs");
+    }
+
+    const animals = await peticion.json();
+    const animal = animals.find(animal => animal.id === pet.breed)
+    return animal;
+  } catch (error) {
+    console.error("There is a problem getting dogs", error);
+    throw error;
+  }
+}
+
+async function getSpecieByBreed(breed) {
+  try {
+    const peticion = await fetch("http://127.0.0.1:8000/api/species/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!peticion.ok) {
+      throw new Error("Error getting dogs");
+    }
+
+    const species = await peticion.json();
+    const specie = species.find(specie => specie.id === breed.specieBreed)
+    return specie;
+  } catch (error) {
+    console.error("There is a problem getting dogs", error);
+    throw error;
+  }
+}
+
+
+
+export { getDogs, getDog, getCats, getCat, createDogs, createAnimals, getAnimals, getAnimalByPet, getSpecieByBreed };

@@ -71,3 +71,23 @@ h1 {
     cursor: pointer;
 }
 
+
+
+#ticketsCardsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    flex-wrap: wrap;          
+    gap: 15px;                
+}
+
+.ticketsCards {
+    width: 200px;          
+    border: 1px solid #000;
+    white-space: normal;    
+    overflow-wrap: break-word;  
+    padding: 10px;           
+    border-radius: 8px;      
+}
+

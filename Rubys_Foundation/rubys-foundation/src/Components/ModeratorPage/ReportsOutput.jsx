@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import { getReports } from '../../Services/ServicesReports'
-import { getPublications } from '../../Services/ServicesPublications'
+import { getPublications, updatePublications } from '../../Services/ServicesPublications'
 import { getUser, getUsers, updateUsers } from '../../Services/ServicesUsers'
 import { updateReport } from '../../Services/ServicesReports'
 import { getPublication } from '../../Services/ServicesPublications'
@@ -45,15 +45,18 @@ function ReportsOutput({reportGrade}) {
                 moderator: Number(currentUser.id)   
             };
 
-            const reporteduser = getUser(report.reportedUser)
-            console.log(reporteduser)
-            const userUpdate = {
-                ...reporteduser,
+            const reportedPublication = await getPublication(report.reportedPublication)
+            console.log(reportedPublication)
+
+            const publicationUpdate = {
+                ...reportedPublication,
                 isHidden: true   
             }
             const updatedReport = await updateReport(report.id, reportUpdate);
-            const updatedUser = await updateUsers(report.reportedUser, userUpdate)
-            console.log(updatedUser)
+            const updatedPublication = await updatePublications(report.reportedPublication, publicationUpdate)
+
+
+            console.log(updatedPublication)
             console.log(updatedReport)
         }
         else if(reportGrade === 2){
@@ -63,18 +66,25 @@ function ReportsOutput({reportGrade}) {
                 administrator: Number(currentUser.id)   
             };
 
-            const reporteduser = getUser(report.reportedUser)
-            console.log(reporteduser)
+            const reporteduser = await getUser(report.reportedUser)
+            const reportedPublication = await getPublication(report.reportedPublication)
 
             const userUpdate = {
                 ...reporteduser,
+                isBanned: true
+            }
+
+            const publicationUpdate = {
+                ...reportedPublication,
                 isHidden: true   
             }
+
             const updatedUser = await updateUsers(report.reportedUser, userUpdate)
+            const updatedPublication = await updatePublications(report.reportedPublication, publicationUpdate)
             const updatedReport = await updateReport(report.id, reportUpdate);
 
-
             console.log(updatedUser)
+            console.log(updatedPublication)
             console.log(updatedReport)
         }
 
@@ -93,11 +103,11 @@ function ReportsOutput({reportGrade}) {
                 reportGrade: 4,                     
                 moderator: Number(currentUser.id)   
             };
-            const userUpdate = {
+            const publicationUpdate = {
                 isHidden: false
             }
             const updatedReport = await updateReport(report.id, reportUpdate);
-            const updatedUser = await updateUsers(report.reportedUser, userUpdate)
+            const updatedUser = await updatePublications(report.reportedpublication, publicationUpdate)
             console.log(updatedUser)
             console.log(updatedReport)
             
@@ -108,14 +118,14 @@ function ReportsOutput({reportGrade}) {
                 reportGrade: 4,                     
                 administrator: Number(currentUser.id)   
             };
-            const userUpdate = {
+            const publicationUpdate = {
                 isHidden: false
             }
-            const updatedUser = await updateUsers(report.reportedUser, userUpdate)
+            const updatedPublication = await updatePublications(report.reportedPublication, publicationUpdate)
             const updatedReport = await updateReport(report.id, reportUpdate);
 
 
-            console.log(updatedUser)
+            console.log(updatedPublication)
             console.log(updatedReport)
         }
     }

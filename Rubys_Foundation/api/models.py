@@ -40,9 +40,9 @@ Tabla Users, tabla encargada de almacenar a todos los usuarios, moderadores y ad
 con datos importantes como su ubicacion, parametros para iniciar sesion y a cuantas mascotas han adoptado y han ayudado 
 """
 class Users (models.Model):
-    firstName = models.CharField(max_length=50)
-    lastName = models.CharField(max_length=50)
-    username = models.CharField(max_length=50, unique=True)
+    firstName = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, unique=True)
     phoneNumber = models.CharField(max_length=20)
     country = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
@@ -50,7 +50,6 @@ class Users (models.Model):
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=256)
     isBanned = models.BooleanField(default=False)
-    isHidden = models.BooleanField(default=False)
 
     petsHelped = models.IntegerField(default=0)
     petsAdopted = models.IntegerField(default=0)
@@ -75,7 +74,7 @@ Clase tickets es la tabla en la que se almacenan todos los tickets hechos por us
 """
 
 class Tickets (models.Model):
-    description = models.CharField(max_length=300)
+    description = models.CharField(max_length=1000)
     ticketDate = models.DateField(default=timezone.now)
     ticketstatus = models.ForeignKey(TicketsStatus, on_delete=models.CASCADE)
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
@@ -85,7 +84,7 @@ La tabla AuditTickets sirve para almacenar todos los tickets resueltos hechos po
 """
 
 class AuditTickets (models.Model):
-    moderatorAsnwer = models.CharField(max_length=300)
+    moderatorAnswer = models.CharField(max_length=1000)
     answerDate = models.DateField(default=timezone.now)
     moderator = models.ForeignKey(Users, on_delete=models.CASCADE)
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
@@ -142,6 +141,7 @@ class Publications (models.Model):
     reward= models.IntegerField( blank=True, null=True)
     datePublications = models.DateField(default=timezone.now)
     pet = models.ForeignKey(Pets, on_delete=models.CASCADE)
+    isHidden = models.BooleanField(default=False)
 
 """"
 La tabla MediaPets almacena todos los archivos que son de una mascota 

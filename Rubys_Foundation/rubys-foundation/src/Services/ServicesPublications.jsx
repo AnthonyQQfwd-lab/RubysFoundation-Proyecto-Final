@@ -23,9 +23,32 @@ async function getPublications() {
     }
 }
 
-async function getPublication() {
+async function getPublicationsByPet(pet) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/publications/${id}`, {
+        const peticion = await fetch('http://127.0.0.1:8000/api/publications/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!peticion.ok) {
+            throw new Error("Error getting ");
+        }
+
+        const publications = await peticion.json();
+        const petsPublications = publications.filter(publication => publication.pet === pet.id)
+        return petsPublications;
+
+    } catch (error) {
+        console.error("there is a problem getting publications", error);
+        throw error;
+    }
+}
+
+async function getPublication(id) {
+    try {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/publications/${id}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -75,7 +98,7 @@ async function createPublications(newUser) {
 //(PUT || PATCH)
 async function updatePublications(id, updateData) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/publications/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/publications/${id}/`, {
             method: 'PATCH', 
             headers: {
                 'Content-Type': 'application/json'
@@ -87,8 +110,8 @@ async function updatePublications(id, updateData) {
             throw new Error("Error updating ");
         }
 
-        const updateUser = await peticion.json();
-        return updateUser;
+        const updatePublication = await peticion.json();
+        return updatePublication;
 
     } catch (error) {
         console.error("Error updating user", error);
@@ -99,7 +122,7 @@ async function updatePublications(id, updateData) {
 //(DELETE)
 async function deletePublications(id) {
     try {
-        const peticion = await fetch(`http://127.0.0.1:8000/api/publications/${id}`, {
+        const peticion = await fetch(`http://127.0.0.1:8000/api/publications/${id}/`, {
             method: 'DELETE'
         });
 
@@ -116,4 +139,4 @@ async function deletePublications(id) {
 }
 
 
-export { getPublications, createPublications, updatePublications, deletePublications, getPublication};
+export { getPublications, createPublications, updatePublications, deletePublications, getPublication, getPublicationsByPet};
