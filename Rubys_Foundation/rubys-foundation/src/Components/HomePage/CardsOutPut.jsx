@@ -53,9 +53,7 @@ function CardsOutPut({ publicationsType }) {
     getData()
   }, [])
 
-  function contact() {
-    console.log('contact')
-  }
+
 
   function toRad(coordinate) {
     return coordinate * Math.PI / 180
@@ -183,7 +181,7 @@ function CardsOutPut({ publicationsType }) {
               </button>
 
               {!isMyProfile && (
-                <button onClick={contact}>Contact</button>
+                <Link to="/Chat" state={{ anotherUser, pet }}><button>Contact</button></Link>
               )}
 
               {isMyProfile && (
