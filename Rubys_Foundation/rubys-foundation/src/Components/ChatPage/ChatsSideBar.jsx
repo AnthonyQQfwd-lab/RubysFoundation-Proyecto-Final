@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getUsers } from '../../Services/ServicesUsers';
 import { getPets } from '../../Services/ServicesPets';
 
-function ChatsSideBar({ chatsUsersPet, chats, currentUser }) {
+function ChatsSideBar({ chatsUsersPet, chats, currentUser, onSelectChat }) {
   const [users, setUsers] = useState([]);
   const [pets, setPets] = useState([]);
 
@@ -32,7 +32,7 @@ function ChatsSideBar({ chatsUsersPet, chats, currentUser }) {
         const otherUserData = users.find(user => user.id === otherUserId);
 
         return (
-          <div key={chatUsersPet.id} className="chatCard">
+          <div key={chatUsersPet.id} className="chatCard" onClick={() => onSelectChat(chatUsersPet)}>
             <strong>{otherUserData ? otherUserData.firstName + ' ' + otherUserData.lastName : 'User unknown'}:</strong><br/>
             {chat ? chat.about : 'Chat without information'}
           </div>

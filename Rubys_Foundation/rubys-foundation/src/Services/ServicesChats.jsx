@@ -53,6 +53,28 @@ async function getChatsByUserChats(userChats) {
     }
 }
 
+async function getChatByChatUsersPet(userChats) {
+    try {
+        const res = await fetch('http://127.0.0.1:8000/api/chats/', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!res.ok) throw new Error("Error getting chats");
+
+        const chatsUser = await res.json();
+
+        const chat = chatsUser.find(chat => chat.id === userChats.chat)
+        return chat;
+       
+        
+    } catch (error) {
+        console.error("Error filtering chats", error);
+        throw error;
+    }
+}
+
+
+
 // POST crear un chat
 async function createChat(newChat) {
     try {
@@ -99,5 +121,6 @@ export {
     createChatsUsersPets,
     createChat,
     getChats,
-    getChatsByUserChats
+    getChatsByUserChats,
+    getChatByChatUsersPet
 };

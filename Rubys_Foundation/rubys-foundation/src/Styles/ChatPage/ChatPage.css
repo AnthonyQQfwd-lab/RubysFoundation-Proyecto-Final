@@ -7,14 +7,14 @@ html, body {
 }
 
 #chatPageContainer{
-    display: flex;         /* activa flexbox */
-    height: 100vh;         /* toda la altura de la ventana */
+    display: flex;         
+    height: 100vh;         
 }
 
 header {
     width: 100%;
-    height: 60px;          /* ajusta según tu NavBar */
-    position: fixed;       /* si quieres que quede fijo arriba */
+    height: 10%;          
+    position: fixed;       
     top: 0;
     left: 0;
     background-color: #f0f0f0;
@@ -23,7 +23,7 @@ header {
 
 #chatSideBarContainer{
     width: 30%;
-    height: 100vh;           
+    height: 89%;         
     background-color: brown;
     display: flex;
     flex-direction: column;  
@@ -35,4 +35,26 @@ header {
 
 #chatSideBarContainer{
     margin-top: 70px;
+}
+
+#chatContainer {
+    display: flex;
+    flex-direction: column; 
+    height: 100%;           
+    width: 100%;
+    background-color: red;   
+    box-sizing: border-box;
+}
+
+#messagesList {
+    flex: 1;                
+    overflow-y: auto;       
+    padding: 10px;
+}
+
+#mesageInputContainer {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    box-sizing: border-box;
 }
