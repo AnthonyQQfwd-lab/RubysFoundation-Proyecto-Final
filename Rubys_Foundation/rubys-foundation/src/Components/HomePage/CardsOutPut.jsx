@@ -105,7 +105,7 @@ function CardsOutPut({ publicationsType }) {
 
       if (existingRelation) {
         console.log("Chat existente encontrado:", existingRelation);
-        //navigate('/Chat', { state: { chatId: existingRelation.chat, anotherUser, pet } });
+        navigate('/Chat', { state: { chatData: existingRelation } });
       } else {
         console.log("No existe chat, se creará uno nuevo.");
 
@@ -124,7 +124,7 @@ function CardsOutPut({ publicationsType }) {
         console.log("Nuevo chat creado:", newChat);
         console.log("Nueva relación chat-usuarios-mascota:", chatUsersPet);
 
-        //navigate('/Chat', { state: { chatId: newChat.id, anotherUser, pet } });
+        navigate('/Chat', { state: { chatData: chatUsersPet } });
       }
     } catch (error) {
       console.error("Error al buscar o crear chat:", error);
