@@ -1,3 +1,60 @@
+import React, {useEffect, useState} from 'react'
+import NavBar from '../../Components/NavBar'
+import '../../Styles/ChatPage/ChatPage.css';
+import {
+  getChatsUsersPetsByUser,
+  createMessage,
+  getChatsByUserChats,
+  getMessagesByChat
+} from '../../Services/ServicesChats.jsx'
+import { getUsers } from '../../Services/ServicesUsers.jsx'
+
+
+function Chat() {
+
+  const [chatsUsersPets, setChatsUsersPets] = useState([])
+  const [chats, setChats] = useState([])
+  const [users, setUsers] = useState([])
+  const [message, setMessage] = useState("")
+  const [currentChat, setCurrentChat] = useState(null)
+  const [currentChatMessages, setCurrentChatMessages] = useState([])
+
+  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
+
+  useEffect(() => {
+    async function getData() {
+      const chatsUsersPets = await getChatsUsersPetsByUser(currentUser)
+      setChatsUsersPets(chatsUsersPets)
+
+      const chats = await getChatsByUserChats(chatsUsersPets)
+      setChats(chats)
+
+      const users = await getUsers()
+      setUsers(users)
+    }
+    getData()
+  }, [])
+  
+  return (
+    <div id="chatContainer">
+      <header><NavBar /></header>
+      <div id="sideBarChatPanelContainer">
+        <div id="sideBar">
+          <h1>sidebar</h1>
+        </div>
+        <div id="chatPanel">
+            
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Chat
+
+
+
+/*
 import React, { useState, useEffect } from 'react'
 import NavBar from '../../Components/NavBar'
 import {
@@ -167,3 +224,5 @@ function Chat() {
 }
 
 export default Chat
+
+*/

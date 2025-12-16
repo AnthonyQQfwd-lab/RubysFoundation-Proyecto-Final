@@ -21,18 +21,16 @@ function ProfilePage() {
   }, [id])
 
   if (loading) {
-    return <p>Cargando perfil...</p>
+    return <p>loading profile....</p>
   }
 
   return (
     <div>
       <NavBar />
-      <h1>Profile Page</h1>
-
       {user ? (
         <UserProfileInformationOutPut user={user} />
       ) : (
-        <p>No se encontró el usuario.</p>
+        <p>User not Found</p>
       )}
     </div>
   )

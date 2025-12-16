@@ -3,7 +3,7 @@ import { getPublicationsByPet } from '../../Services/ServicesPublications';
 import { getCountryByUser } from '../../Services/ServicesCountriesData';
 import { getCityByUser } from '../../Services/ServicesCitiesData';
 import { getPetsByUser } from '../../Services/ServicesPets';
-
+import '../../Styles/ProfilePage/ProfilePage.css';
 import CardsOutPut from '../HomePage/CardsOutPut';
 
 function UserProfileInformationOutPut({ user }) {
@@ -16,7 +16,6 @@ function UserProfileInformationOutPut({ user }) {
     useEffect(() => {
         async function getData() {
             if(user){
-                console.table(user)
                 const pets = await getPetsByUser(user);
                 setPets(pets)
                 const petsPublications = []
@@ -46,26 +45,50 @@ function UserProfileInformationOutPut({ user }) {
 
 
   return (
-    <div>
+    <div id="profilePage">
+        
         <div id="userProfileInformationContainer">
+        <div className="profileHeader">
+            <div className="avatar">
+            {user.firstName[0]}
+            </div>
+
+            <div className="profileInfo">
             <h3>{user.firstName} {user.lastName}</h3>
-            <p>member since: {user.dateJoined}</p>
-            <p>{user.email}</p>
-            <p>{country.name}, {city.name}</p>
-            <button onClick={editUserProfile}> Edit profile</button>
+            <p className="email">{user.email}</p>
+            <p className="location">{country.name}, {city.name}</p>
+            <p className="joined">Member since: {user.dateJoined}</p>
+            </div>
+
+            <button className="editProfileBtn" onClick={editUserProfile}>
+            Edit profile
+            </button>
         </div>
+        </div>
+
         <div id="userStatisticsContainer">
-            <div className='statisticsItems'>{user.petsAdopted}</div>
-            <div className='statisticsItems'>{user.petsHelped}</div>
-            <div className='statisticsItems'></div>
+        <div className="statisticsItems">
+            <strong>{user.petsAdopted}</strong>
+            <span>Pets adopted</span>
         </div>
+        <div className="statisticsItems">
+            <strong>{user.petsHelped}</strong>
+            <span>Pets helped</span>
+        </div>
+        <div className="statisticsItems">
+            <strong>{pets.length}</strong>
+            <span>My pets</span>
+        </div>
+        </div>
+
         <div id="cardsOutPutContainer">
-            <CardsOutPut publicationsType="Adopcion" />
-            <CardsOutPut publicationsType="Lost" />
-                    <CardsOutPut publicationsType="Wanted" />
+        <CardsOutPut publicationsType="Adopcion" />
+        <CardsOutPut publicationsType="Lost" />
+        <CardsOutPut publicationsType="Wanted" />
         </div>
+
     </div>
-  )
+    )
 }
 
 export default UserProfileInformationOutPut

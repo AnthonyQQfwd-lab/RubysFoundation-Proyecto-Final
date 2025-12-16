@@ -7,7 +7,6 @@ function PostPage() {
   return (
     <div>
         <NavBar />
-        PostPage
         <div id="postPublicationContainer">
           <PostPublication />
         </div>

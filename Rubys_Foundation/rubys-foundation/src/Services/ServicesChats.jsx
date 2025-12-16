@@ -115,6 +115,46 @@ async function createChatsUsersPets(newChatUserPet) {
     }
 }
 
+async function createMessage(newMessage) {
+    try {
+        const res = await fetch('http://127.0.0.1:8000/api/messages/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newMessage)
+        });
+        if (!res.ok) {
+            const errData = await res.json();
+            console.error("Error details:", errData);
+            throw new Error("Error creating chat user-pet");
+        }
+        return await res.json();
+    } catch (error) {
+        console.error("Error creating chat user-pet", error);
+        throw error;
+    }
+}
+
+
+async function getMessagesByChat(chat) {
+    try {
+        const res = await fetch('http://127.0.0.1:8000/api/messages/', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!res.ok) throw new Error("Error getting chats");
+
+        const messages = await res.json();
+        const messagesChat = messages.filter(message => message.chat === chat.id )
+
+        return messagesChat;
+       
+        
+    } catch (error) {
+        console.error("Error filtering messages", error);
+        throw error;
+    }
+}
+
 // Exportar todas las funciones
 export {
     getChatsUsersPetsByUser,
@@ -122,5 +162,9 @@ export {
     createChat,
     getChats,
     getChatsByUserChats,
-    getChatByChatUsersPet
+    getChatByChatUsersPet,
+    createMessage,
+    getMessagesByChat
 };
+
+

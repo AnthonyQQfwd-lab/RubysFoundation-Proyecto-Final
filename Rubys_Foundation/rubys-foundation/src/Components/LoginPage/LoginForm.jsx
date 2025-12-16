@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { createLogin } from '../../Services/ServicesLogin';
 import { getUser } from '../../Services/ServicesUsers';
 import { jwtDecode } from "jwt-decode";
-
+import '../../Styles/LoginPage/LoginPage.css';
 
 function LoginForm() {
     const navigate = useNavigate();
@@ -36,15 +36,18 @@ function LoginForm() {
         }
     }
   return (
-    <div>
-        <label>Email</label>
+    <div id="loginFormContainer">
+      <div id="loginForm">
+
+      
+        <label>Email</label><br/>
         <input type="email" value={email} placeholder='Email'  onChange={(e) => setEmail(e.target.value)}/>
         <label>Password</label>
         <input type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
         <button onClick={logIn}>Log in </button >
         
         <small>Don’t have an account? <Link to="/Register">Register here</Link></small>
-        
+      </div>
     </div>
   )
 }

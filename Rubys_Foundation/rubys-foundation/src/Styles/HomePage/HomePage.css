@@ -2,7 +2,6 @@
 html, body {
     height: 100%;
     width: 100%;
-    background-color: rgb(10, 10, 10);
 }
 
 
@@ -23,6 +22,7 @@ html, body {
     display: flex;
     flex-wrap: wrap;       
     justify-content: center; 
+    
 }
 
 .optionsBtn {
@@ -60,7 +60,7 @@ html, body {
 }
 
 #optionsDialog{
-    background-color: red;
+
     height: 500px;
     width: 500px;;
 }
@@ -146,5 +146,87 @@ html, body {
 
 
 #cardsOutPutContainer {
-    margin-top: 30px;
+    
 }
+
+#cardsOutPutPage {
+    min-height: 100vh;
+    width: 100%;
+    background-color: rgb(12, 20, 35);  
+    padding-top: 20px;
+}
+
+
+/* Fondo oscuro detrás del dialog */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo general del dialog */
+dialog {
+    border: none;
+    border-radius: 12px;
+    padding: 20px 25px;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    width: 400px;
+    max-width: 90%;
+    animation: fadeIn 0.25s ease-out;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+
+    /* Centrado */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Títulos */
+dialog h4 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #fff;
+}
+
+/* Texto */
+dialog p {
+    color: rgb(200, 200, 200);
+    margin-bottom: 10px;
+}
+
+
+dialog img {
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+
+dialog button {
+    background-color: #ff4d4d;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+dialog button:hover {
+    background-color: #cc0000;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+

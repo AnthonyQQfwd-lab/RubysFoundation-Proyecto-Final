@@ -3,9 +3,8 @@ import LoginForm from '../../Components/LoginPage/LoginForm'
 import UploadTables from '../../Components/UploadTables'
 function LoginPage() {
   return (
-    <div>LoginPage
+    <div>
         <LoginForm />
-        <UploadTables/>
     </div>
     
   )

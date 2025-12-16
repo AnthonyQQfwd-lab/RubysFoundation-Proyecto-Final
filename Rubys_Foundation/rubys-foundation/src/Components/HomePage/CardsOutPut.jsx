@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom'
 import { getPets } from '../../Services/ServicesPets'
 import { getMediaPets } from '../../Services/ServicesMediaPets'
 import { getPublications } from '../../Services/ServicesPublications'
@@ -13,6 +13,8 @@ import '../../Styles/HomePage/HomePage.css'
 import GoTOProfileBtn from '../GoTOProfileBtn'
 
 function CardsOutPut({ publicationsType }) {
+  const navigate = useNavigate();
+
   const location = useLocation()
   const { id: profileId } = useParams()
 
@@ -132,7 +134,7 @@ function CardsOutPut({ publicationsType }) {
   }
 
   return (
-    <div>
+    <div id="cardsOutPutPage">
       {menuOpen && (
         <div
           className="optionsMenu"
@@ -224,10 +226,12 @@ function CardsOutPut({ publicationsType }) {
               >
                 see more
               </button>
+              {/*
+                {!isMyProfile && (
+                  <button onClick={() => goToContactUser(anotherUser, pet)}>Contact</button>
+                )}
+              */}
 
-              {!isMyProfile && (
-                <button onClick={() => goToContactUser(anotherUser, pet)}>Contact</button>
-              )}
 
               {isMyProfile && (
                 <div className='editDeletebtnsContainer'>

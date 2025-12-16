@@ -10,6 +10,8 @@ import { getCountriesLocal } from '../../Services/ServicesCountriesData';
 import { getStatesLocal } from '../../Services/ServicesStatesData';
 import { getsCitiesLocal } from '../../Services/ServicesCitiesData';
 
+import '../../Styles/RegisterPage/RegisterPage.css';
+
 function RegisterForm() {
     const navigate = useNavigate();
 
@@ -172,36 +174,38 @@ function RegisterForm() {
     
 
     return (
-        <div>RegisterForm<br/>
-            <input type="text" value={firstName} placeholder='First name' onChange={(e) => setFirstName(e.target.value)}/><br/>
-            <input type="text" value={lastName} placeholder='Last name' onChange={(e) => setLastName(e.target.value)}/><br/>
-            <input type="text" value={phoneNumber} placeholder='Phone number' onChange={(e) => setPhoneNumber(e.target.value)}/><br/>
-            
-            <select name="countryId" id="countryId" value={countryId} onChange={handleChangeCountry}>
-                <option value="">Select a country</option>
-                {countries.map((country, index) => (
-                    <option key={index} value={country.id}>{country.name}</option>
-                ))}
-            </select>
-            
-            <select value={stateId} onChange={handleChangeState}>
-                <option value="">Select a state</option>
-                {states.map((state, index) => (
-                    <option key={index} value={state.id}>{state.name}</option>
-                ))}
-            </select><br />
+        <div id='registerFormContainer'>
+            <div id="registerForm">
+                <input type="text" value={firstName} placeholder='First name' onChange={(e) => setFirstName(e.target.value)}/>
+                <input type="text" value={lastName} placeholder='Last name' onChange={(e) => setLastName(e.target.value)}/>
+                <input type="text" value={phoneNumber} placeholder='Phone number' onChange={(e) => setPhoneNumber(e.target.value)}/>
+                
+                <select name="countryId" id="countryId" value={countryId} onChange={handleChangeCountry}>
+                    <option value="">Select a country</option>
+                    {countries.map((country, index) => (
+                        <option key={index} value={country.id}>{country.name}</option>
+                    ))}
+                </select>
+                
+                <select value={stateId} onChange={handleChangeState}>
+                    <option value="">Select a state</option>
+                    {states.map((state, index) => (
+                        <option key={index} value={state.id}>{state.name}</option>
+                    ))}
+                </select>
 
-            <select value={cityId} onChange={handleChangeCity}>
-                <option value="">Select a city</option>
-                {cities.map((city, index) => (
-                    <option key={index} value={city.id}>{city.name}</option>
-                ))}
-            </select><br />
+                <select value={cityId} onChange={handleChangeCity}>
+                    <option value="">Select a city</option>
+                    {cities.map((city, index) => (
+                        <option key={index} value={city.id}>{city.name}</option>
+                    ))}
+                </select>
 
-            <input type="email" value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)}/><br/>
-            <input type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)}/><br/>
-            <input type="password" value={confirmPassword} placeholder='Confirm password' onChange={(e) => setConfirmPassword(e.target.value)}/><br/>
-            <button onClick={registerUser}>Register</button>
+                <input type="email" value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
+                <input type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
+                <input type="password" value={confirmPassword} placeholder='Confirm password' onChange={(e) => setConfirmPassword(e.target.value)}/>
+                <button onClick={registerUser}>Register</button>
+            </div>
         </div>
     )
 }

@@ -1,3 +1,19 @@
+import React from 'react'
+import Chat from '../../Components/ChatPage/Chat';
+function ChatPage() {
+  return (
+    <div>
+      <Chat />
+    </div>
+  )
+}
+
+export default ChatPage
+
+
+
+
+/*
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../Components/NavBar';
@@ -111,3 +127,13 @@ function ChatPage() {
 }
 
 export default ChatPage;
+*/
+
+
+
+
+
+
+
+
+

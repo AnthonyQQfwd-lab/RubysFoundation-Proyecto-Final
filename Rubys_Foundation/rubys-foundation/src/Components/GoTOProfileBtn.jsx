@@ -10,7 +10,7 @@ function GoTOProfileBtn({ user }) {
 
   return (
     <button onClick={goToUserProfile}>
-      Keeper: {user.firstName} {user.lastName}
+      profile
     </button>
   )
 }
