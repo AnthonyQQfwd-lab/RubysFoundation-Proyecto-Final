@@ -7,6 +7,8 @@ import { getAnimals } from '../../Services/ServicesSpecies'
 import { getsCitiesLocal } from '../../Services/ServicesCitiesData'
 import { getUsers } from '../../Services/ServicesUsers'
 
+import { getChatsUsersPetsByUser, getChatsByUserChats, createChat, createChatsUsersPets } from '../../Services/ServicesChats'
+
 import '../../Styles/HomePage/HomePage.css'
 import GoTOProfileBtn from '../GoTOProfileBtn'
 
@@ -84,6 +86,49 @@ function CardsOutPut({ publicationsType }) {
     })
     setPublication(publication)
     setMenuOpen(true)
+  }
+
+  async function goToContactUser(anotherUser, pet) {
+    try {
+      const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+      if (!currentUser) throw new Error("Usuario no logueado");
+
+      // Traer todas las relaciones chats-usuarios-mascotas
+      const chatsUsersPet = await getChatsUsersPetsByUser(currentUser);
+      
+      // Buscar si ya existe un chat para estos miembros y esta mascota
+      const existingRelation = chatsUsersPet.find(cup =>
+        ((cup.member1 === currentUser.id && cup.member2 === anotherUser.id) ||
+        (cup.member2 === currentUser.id && cup.member1 === anotherUser.id)) &&
+        cup.pet === Number(pet.id)
+      );
+
+      if (existingRelation) {
+        console.log("Chat existente encontrado:", existingRelation);
+        //navigate('/Chat', { state: { chatId: existingRelation.chat, anotherUser, pet } });
+      } else {
+        console.log("No existe chat, se creará uno nuevo.");
+
+        // Crear el chat
+        const newChat = await createChat({ about: pet.name });
+
+        // Crear la relación chat-usuarios-mascota
+        const newChatUsersPet = {
+          member1: currentUser.id,
+          member2: anotherUser.id,
+          pet: pet.id,
+          chat: newChat.id
+        };
+
+        const chatUsersPet = await createChatsUsersPets(newChatUsersPet);
+        console.log("Nuevo chat creado:", newChat);
+        console.log("Nueva relación chat-usuarios-mascota:", chatUsersPet);
+
+        //navigate('/Chat', { state: { chatId: newChat.id, anotherUser, pet } });
+      }
+    } catch (error) {
+      console.error("Error al buscar o crear chat:", error);
+    }
   }
 
   return (
@@ -181,7 +226,7 @@ function CardsOutPut({ publicationsType }) {
               </button>
 
               {!isMyProfile && (
-                <Link to="/Chat" state={{ anotherUser, pet }}><button>Contact</button></Link>
+                <button onClick={() => goToContactUser(anotherUser, pet)}>Contact</button>
               )}
 
               {isMyProfile && (
