@@ -1,27 +1,5 @@
 /* CRUD - Datos */
 
-//(GET)
-async function getLogin() {
-    try {
-        const peticion = await fetch('http://127.0.0.1:8000/api/login/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!peticion.ok) {
-            throw new Error("Error getting ");
-        }
-
-        const Usuarios = await peticion.json();
-        return Usuarios;
-
-    } catch (error) {
-        console.error("there is a problem getting Login", error);
-        throw error;
-    }
-}
 
 //(POST)
 async function createLogin(newUser) {
@@ -119,4 +97,4 @@ async function deleteLogin(id) {
     }
 }
 
-export { getLogin, createLogin, updateLogin, deleteLogin, createLogindjango};
+export { createLogin, updateLogin, deleteLogin, createLogindjango};
