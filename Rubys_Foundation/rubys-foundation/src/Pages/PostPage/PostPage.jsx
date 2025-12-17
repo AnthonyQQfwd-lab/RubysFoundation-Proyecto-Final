@@ -11,7 +11,6 @@ function PostPage() {
           <PostPublication />
         </div>
         
-        <UploadTables/>
     </div>
   )
 }

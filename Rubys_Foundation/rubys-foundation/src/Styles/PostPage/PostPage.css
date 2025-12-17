@@ -1,29 +1,142 @@
-img{
-    height: 100px;
-    width: 100px;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: rgb(12, 20, 35);
+  overflow-x: hidden;
 }
 
-
-#modalBreeds{
-    width: 500px;
-    height: 80%;
-}
-
-
-#containerModal{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    grid-template-rows: repeat(17, auto);  
-    gap: 15px; 
-    width: 100%;
-    max-width: 1200px; 
-    margin: 0 auto;
-}
-
+/* CONTENEDOR GENERAL */
 #postPublicationContainer {
-    display: grid;
-
-    place-items: center;       
-    height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(12, 20, 35);
+  overflow-x: hidden;
 }
 
+/* TARJETA */
+.postCard {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+/* TÍTULO */
+.postTitle {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* INPUTS */
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.textarea {
+  min-height: 80px;
+  resize: none;
+}
+
+/* BOTONES */
+.primaryBtn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.primaryBtn:hover {
+  background: #43a047;
+}
+
+.secondaryBtn {
+  background: #eeeeee;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* SUBIR ARCHIVO */
+.fileLabel {
+  background: #e3f2fd;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ESPECIE */
+.speciesButtons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.speciesButtons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.speciesButtons img {
+  width: 90px;
+  transition: transform 0.2s;
+}
+
+.speciesButtons img:hover {
+  transform: scale(1.1);
+}
+
+/* SELECCION */
+.selected {
+  font-size: 14px;
+  color: #4CAF50;
+  text-align: center;
+}
+
+/* MODAL */
+#modalBreeds {
+  width: 600px;
+  max-height: 85dvh;
+  border-radius: 12px;
+  border: none;
+  padding: 0;
+  overflow-y: auto;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#containerModal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+#containerModal img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}

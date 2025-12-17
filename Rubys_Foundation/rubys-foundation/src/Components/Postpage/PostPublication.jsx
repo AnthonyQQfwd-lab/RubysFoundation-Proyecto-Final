@@ -1,315 +1,202 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 
-// Servicios para manejo de mascotas y publicaciones
-import { createPets } from '../../Services/ServicesPets';
-import { createPublications } from '../../Services/ServicesPublications';
-import { getAnimals } from '../../Services/ServicesSpecies';
-import { getMediaBreeds } from '../../Services/ServicesMediaBreeds';
+import { createPets } from '../../Services/ServicesPets'
+import { createPublications } from '../../Services/ServicesPublications'
+import { getAnimals } from '../../Services/ServicesSpecies'
+import { getMediaBreeds } from '../../Services/ServicesMediaBreeds'
 
-import '../../Styles/PostPage/PostPage.css';
+import '../../Styles/PostPage/PostPage.css'
 
-function PostPublication({publication}) {
-  if(publication){
-    console.log(publication)
+function PostPublication() {
+
+  const [name, setName] = useState('')
+  const [age, setAge] = useState('')
+  const [breed, setBreed] = useState({})
+  const [breedId, setBreedId] = useState('')
+  const [specie, setSpecie] = useState('')
+  const [isVaccinated, setIsVaccinated] = useState('')
+  const [status, setStatus] = useState('')
+
+  const [reward, setReward] = useState('')
+  const [description, setDescription] = useState('')
+  const [image, setImage] = useState(null)
+
+  const [breeds, setBreeds] = useState([])
+  const [mediaBreeds, setMediaBreeds] = useState([])
+
+  const dialogRef = useRef(null)
+
+  const handleChangeStatus = (e) => {
+    const value = e.target.value
+    setStatus(value)
+
+    if (value === 'Adopcion') {
+      setReward('')
+    }
   }
-  // Estados para información de la mascota
-  const [name, setName] = useState('');
-  const [age, setAge] = useState(0);
-  const [breed, setBreed] = useState({});
-  const [breedId, setBreedId] = useState('');
-  const [specie, setSpecie] = useState('');
-  const [isVaccinated, setIsVaccinated] = useState('');
-  const [status, setStatus] = useState("Unknown");
-  
-  // Estados para información de la publicación
-  const [reward, setReward] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
-  
-  // Estados para datos de razas
-  const [breeds, setBreeds] = useState([]);
-  const [mediaBreeds, setMediaBreeds] = useState([]);
-  
-  // Referencia para el modal
-  const dialogRef = useRef(null);
 
-  /**
-   * Maneja el cambio del estado de la mascota (Adopción, Perdido, Buscado)
-   */
-  const handleChangeStatus = (event) => {
-    setStatus(event.target.value);
-  };
+  const handleChangeVaccinated = (e) => setIsVaccinated(e.target.value)
 
-  /**
-   * Maneja el cambio del estado de vacunación
-   */
-  const handleChangeVaccinated = (event) => {
-    setIsVaccinated(event.target.value);
-  };
-
-  /**
-   * Efecto que carga las razas filtradas según la especie seleccionada
-   * Se ejecuta cada vez que cambia la especie (Cat o Dog)
-   */
   useEffect(() => {
-    async function loadBreedsBySpecie() {
-      // Cargar imágenes de las razas
-      const mediaAnimals = await getMediaBreeds();
-      setMediaBreeds(mediaAnimals);
-      
-      // Filtrar razas según la especie seleccionada
+    async function loadBreeds() {
+      const media = await getMediaBreeds()
+      setMediaBreeds(media)
+
+      const animals = await getAnimals()
+
       if (specie === 'Cat') {
-        const animals = await getAnimals();
-        const catBreeds = animals.filter(animal => animal.specieBreed === 1);
-        setBreeds(catBreeds);
-      } else if (specie === 'Dog') {
-        const animals = await getAnimals();
-        const dogBreeds = animals.filter(animal => animal.specieBreed === 2);
-        setBreeds(dogBreeds);
+        setBreeds(animals.filter(a => a.specieBreed === 1))
+      }
+
+      if (specie === 'Dog') {
+        setBreeds(animals.filter(a => a.specieBreed === 2))
       }
     }
-    
-    if (specie) {
-      loadBreedsBySpecie();
-    }
-  }, [specie]);
 
-  /**
-   * Abre el modal para seleccionar la raza de la mascota
-   */
-  const openModalBreeds = () => {
-    if (breeds.length > 0) {
-      dialogRef.current.showModal();
-    }
-  };
+    if (specie) loadBreeds()
+  }, [specie])
 
-  /**
-   * Cierra el modal de selección de razas
-   */
-  const closeModalBreeds = () => {
-    dialogRef.current.close();
-  };
+  const openModalBreeds = () => breeds.length && dialogRef.current.showModal()
+  const closeModalBreeds = () => dialogRef.current.close()
 
-  /**
-   * Sube la imagen de la mascota al servidor
-   * @param {number} petId - ID de la mascota creada
-   * @returns {Promise<string>} URL de la imagen subida
-   */
   const uploadPetImage = async (petId) => {
-        if (!image) return null;
+    if (!image) return
 
-        const formData = new FormData();
-        formData.append('pet', petId);
-        formData.append('imagen', image);
+    const formData = new FormData()
+    formData.append('pet', petId)
+    formData.append('imagen', image)
 
-        try {
-          const response = await axios.post(
-              'http://127.0.0.1:8000/api/mediaPets/',
-              formData,
-              {
-              headers: { 'Content-Type': 'multipart/form-data' },
-              }
-          );
-          console.log('Imagen subida:', response.data);
-          return response.data.imagen;
-        } catch (err) {
-        console.error('Error subiendo imagen:', err);
-        return null;
-        }
-    };
-    
-  /**
-   * Crea una nueva publicación con toda la información de la mascota
-   * Proceso:
-   * 1. Crea el registro de la mascota en la base de datos
-   * 2. Sube la imagen de la mascota
-   * 3. Crea la publicación asociada a la mascota
-   */
+    await axios.post('http://127.0.0.1:8000/api/mediaPets/', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  }
+
   const postPublication = async () => {
-    try {
-      // Obtener usuario actual desde sessionStorage
-      const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
 
-      // 1. Crear registro de la mascota
-      const newPet = {
-        name: name,
-        age: age,
-        vaccinated: isVaccinated || 'unknown',
-        isActive: true,
-        status: status,
-        keeper: currentUser.id,
-        breed: breedId || 1,
-      };
-
-      const pet = await createPets(newPet);
-      console.log('Mascota creada:', pet);
-
-      // 2. Subir imagen de la mascota
-      await uploadPetImage(pet.id);
-
-      // 3. Crear publicación
-      const today = new Date().toISOString().split('T')[0];
-      const newPublication = {
-        description: description,
-        reward: reward,
-        datePublications: today,
-        pet: pet.id,
-      };
-
-      const publication = await createPublications(newPublication);
-      console.log('Publicación creada:', publication);
-
-      // Aquí podrías agregar navegación o mensaje de éxito
-      alert('¡Publicación creada exitosamente!');
-      
-    } catch (error) {
-      console.error('Error al crear publicación:', error);
-      alert('Error al crear la publicación. Por favor intenta de nuevo.');
+    const newPet = {
+      name,
+      age,
+      vaccinated: isVaccinated || 'unknown',
+      isActive: true,
+      status,
+      keeper: currentUser.id,
+      breed: breedId || 1
     }
-  };
+
+    const pet = await createPets(newPet)
+
+    await uploadPetImage(pet.id)
+
+    const today = new Date().toISOString().split('T')[0]
+
+    const newPublication = {
+      description,
+      reward: status === 'Lost' || status === 'Wanted' ? reward : null,
+      datePublications: today,
+      pet: pet.id
+    }
+
+    await createPublications(newPublication)
+
+    alert('Post successfully created')
+  }
 
   return (
-    <div>
-      {/* Modal para selección de raza */}
+    <div id="postPublicationContainer">
+
       <dialog ref={dialogRef} id="modalBreeds">
         <div id="containerModal">
-          {/* Opción de raza mixta */}
-          <div>
-            <img
-              src="https://st2.depositphotos.com/1606449/6724/i/950/depositphotos_67248691-stock-photo-adult-mixed-breed-dog-and.jpg"
-              alt="Mixed breed"
-              width="200"
-              onClick={() => {
-                setBreedId(0);
-                setBreed({ name: 'Mixed breed' });
-                closeModalBreeds();
-              }}
-            />
+
+          <div onClick={() => {
+            setBreedId(0)
+            setBreed({ name: 'Mixed breed' })
+            closeModalBreeds()
+          }}>
+            <img src="https://st2.depositphotos.com/1606449/6724/i/950/depositphotos_67248691-stock-photo-adult-mixed-breed-dog-and.jpg" />
             <p>Mixed breed</p>
           </div>
 
-          {/* Lista de razas disponibles */}
-          {breeds.map((breed) => {
-            const media = mediaBreeds.find((m) => m.breed === breed.id);
-
+          {breeds.map(b => {
+            const media = mediaBreeds.find(m => m.breed === b.id)
             return (
-              <div
-                key={breed.id}
-                style={{ marginBottom: '10px', cursor: 'pointer' }}
-                onClick={() => {
-                  setBreedId(breed.id);
-                  setBreed(breed);
-                  closeModalBreeds();
-                }}
-              >
-                {media ? (
-                  <img src={media.imageUrl} alt={breed.name} width="200" />
-                ) : (
-                  <p>No image available</p>
-                )}
-                <p>{breed.name}</p>
+              <div key={b.id} onClick={() => {
+                setBreedId(b.id)
+                setBreed(b)
+                closeModalBreeds()
+              }}>
+                {media ? <img src={media.imageUrl} /> : <p>No image</p>}
+                <p>{b.name}</p>
               </div>
-            );
+            )
           })}
+
         </div>
       </dialog>
 
-      {/* Formulario de publicación */}
-      <select name="status" id="status" value={status} onChange={handleChangeStatus}>
-        <option value="">Selecciona una opción</option>
-        <option value="Adopcion">Mascota en adopción</option>
-        <option value="Lost">Mascota perdida</option>
-        <option value="Wanted">Mascota buscada</option>
-      </select>
-      <br />
+      <div className="postCard">
 
-      <label htmlFor="name">Nombre</label>
-      <br />
-      <input
-        type="text"
-        id="name"
-        value={name}
-        placeholder="Nombre"
-        onChange={(e) => setName(e.target.value)}
-      />
-      <br />
+        <h2 className="postTitle">Publication</h2>
 
-      <label htmlFor="image">Elige una foto o video:</label>
-      <br />
-      <br />
-      <input
-        type="file"
-        id="image"
-        onChange={(e) => setImage(e.target.files[0])}
-        accept="image/*,video/*"
-      />
-      <br />
+        <select className="input" value={status} onChange={handleChangeStatus}>
+          <option value="">Select an option</option>
+          <option value="Adopcion">pet in adoption</option>
+          <option value="Lost">lost pet</option>
+          <option value="Wanted">pet wanted</option>
+        </select>
 
-      <label htmlFor="age">Edad</label>
-      <br />
-      <input
-        type="number"
-        id="age"
-        value={age}
-        placeholder="Edad"
-        onChange={(e) => setAge(e.target.value)}
-      />
-      <br />
+        <input className="input" type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
 
-      <button id="btnCat" onClick={() => setSpecie('Cat')}>
-        <img src="../../../public/images/PostPage/cat_button.png" width="200" alt="Gato" />
-      </button>
-      <button id="btnDog" onClick={() => setSpecie('Dog')}>
-        <img src="../../../public/images/PostPage/dog_button.png" width="200" alt="Perro" />
-      </button>
-      <br />
+        <label className="fileLabel">
+          Upload image
+          <input type="file" hidden accept="image/*,video/*" onChange={e => setImage(e.target.files[0])} />
+        </label>
 
-      <button onClick={openModalBreeds} disabled={!specie}>
-        Seleccionar raza
-      </button>
-      {breed.name && <p>Raza seleccionada: {breed.name}</p>}
-      <br />
+        <input className="input" type="number" placeholder="Age" value={age} onChange={e => setAge(e.target.value)} />
 
-      <select
-        name="vaccinated"
-        id="vaccinated"
-        value={isVaccinated}
-        onChange={handleChangeVaccinated}
-      >
-        <option value="">¿Está vacunada?</option>
-        <option value="no">No</option>
-        <option value="i dont know">No lo sé</option>
-        <option value="some">Algunas</option>
-        <option value="Yes">Sí</option>
-      </select>
-      <br />
+        <div className="speciesButtons">
+          <button onClick={() => setSpecie('Cat')}>
+            <img src="/images/PostPage/cat_button.png" />
+          </button>
+          <button onClick={() => setSpecie('Dog')}>
+            <img src="/images/PostPage/dog_button.png" />
+          </button>
+        </div>
 
-      <label htmlFor="reward">¿Recompensa?</label>
-      <br />
-      <input
-        type="number"
-        id="reward"
-        value={reward}
-        placeholder="Recompensa"
-        onChange={(e) => setReward(e.target.value)}
-      />
-      <br />
+        <button className="secondaryBtn" onClick={openModalBreeds} disabled={!specie}>
+          select a breed
+        </button>
 
-      <label htmlFor="description">Descripción</label>
-      <br />
-      <input
-        type="text"
-        id="description"
-        value={description}
-        placeholder="Descripción"
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <br />
+        {breed.name && <p className="selected">Breed: {breed.name}</p>}
 
-      <button onClick={postPublication}>Crear publicación</button>
+        <select className="input" value={isVaccinated} onChange={handleChangeVaccinated}>
+          <option value="">is it vaccinated??</option>
+          <option value="no">No</option>
+          <option value="i dont know">i dont know</option>
+          <option value="some">some</option>
+          <option value="Yes">yes</option>
+        </select>
+
+        {(status === 'Lost' || status === 'Wanted') && (
+          <input
+            className="input"
+            type="number"
+            placeholder="Recompensa"
+            value={reward}
+            onChange={e => setReward(e.target.value)}
+          />
+        )}
+
+        <textarea className="input textarea" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
+
+        <button className="primaryBtn" onClick={postPublication}>
+          Make publication
+        </button>
+
+      </div>
     </div>
-  );
+  )
 }
 
-export default PostPublication;
+export default PostPublication

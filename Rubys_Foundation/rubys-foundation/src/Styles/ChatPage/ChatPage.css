@@ -1,106 +1,125 @@
-html, body {
-    height: 100%;
-    width: 100%;
-    background-color: rgb(10, 10, 10);
+/* CONTENEDOR GENERAL */
+#postPublicationContainer {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(12, 20, 35);  
 }
 
-#chatContainer {
-    height: 90vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+/* TARJETA */
+.postCard {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-#header {
-    height: 10vh;
+/* TÍTULO */
+.postTitle {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
 }
 
-#sideBarChatPanelContainer{
-    display: flex;
+/* INPUTS */
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
-#sideBar {
-    height: 90vh;              
-    width: 20%;
-    overflow-y: scroll;       
-    -ms-overflow-style: none; 
-    scrollbar-width: none;    
+.textarea {
+  min-height: 80px;
+  resize: none;
 }
 
-.chatCards{
-    border:  2px solid black;
-    padding: 5px;
-    margin: 5px;
-    cursor: pointer;
+/* BOTONES */
+.primaryBtn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-#sideBar::-webkit-scrollbar {
-    display: none;   
+.primaryBtn:hover {
+  background: #43a047;
 }
 
-#chatPanel {
-    height: 90vh;              
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    background-color: gray;
+.secondaryBtn {
+  background: #eeeeee;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-#contactInformation {
-    height: 70px;               
-    padding: 10px;
-    background-color: #111;
-    color: white;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #333;
+/* SUBIR ARCHIVO */
+.fileLabel {
+  background: #e3f2fd;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-#messages {
-    flex: 1;                   
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    gap: 10px;
+/* ESPECIE */
+.speciesButtons {
+  display: flex;
+  justify-content: space-around;
 }
 
-.myMessage {
-    align-self: flex-end;
-    background-color: #4a90e2;
-    color: white;
-    padding: 10px 14px;
-    border-radius: 12px 12px 0 12px;
-    max-width: 60%;
-    word-wrap: break-word;
+.speciesButtons button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.otherMessage {
-    align-self: flex-start;
-    background-color: #333;
-    color: white;
-    padding: 10px 14px;
-    border-radius: 12px 12px 12px 0;
-    max-width: 60%;
-    word-wrap: break-word;
+.speciesButtons img {
+  width: 90px;
+  transition: transform 0.2s;
 }
 
-.myMessage p,
-.otherMessage p {
-    margin: 0;
+.speciesButtons img:hover {
+  transform: scale(1.1);
 }
 
-#inputMessageContainer {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-    margin-top: auto;          
-    background-color: #222;
+/* SELECCION */
+.selected {
+  font-size: 14px;
+  color: #4CAF50;
+  text-align: center;
 }
 
-#inputMessageContainer input {
-    flex: 1;          
-    height: 40px;
-    padding: 0 10px;
-    font-size: 16px;
+/* MODAL */
+#modalBreeds {
+  width: 600px;
+  height: 80%;
+  border-radius: 12px;
+}
+
+#containerModal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+#containerModal img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
 }

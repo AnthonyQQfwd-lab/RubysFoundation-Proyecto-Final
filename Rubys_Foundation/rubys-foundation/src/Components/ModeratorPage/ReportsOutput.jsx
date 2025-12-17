@@ -1,200 +1,150 @@
-import React, {useEffect, useState, useRef} from 'react'
-import { getReports } from '../../Services/ServicesReports'
-import { getPublications, updatePublications } from '../../Services/ServicesPublications'
+import React, { useEffect, useState, useRef } from 'react'
+import { getReports, updateReport } from '../../Services/ServicesReports'
+import { getPublications, updatePublications, getPublication } from '../../Services/ServicesPublications'
 import { getUser, getUsers, updateUsers } from '../../Services/ServicesUsers'
-import { updateReport } from '../../Services/ServicesReports'
-import { getPublication } from '../../Services/ServicesPublications'
-import CardsOutPut from '../HomePage/CardsOutPut'
 import CardsOutputReports from './CardsOutputReports'
-import '../../Styles/ModeratorPage/ModeratorPage.css';
+import '../../Styles/ModeratorPage/ModeratorPage.css'
 
+function ReportsOutput({ reportGrade }) {
 
-function ReportsOutput({reportGrade}) {
-    const confirmApproveDialog = useRef(null)
-    const confirmDenyDialog = useRef(null)
-    const [reports, setReports] = useState([])
-    const [publications, setPublications] = useState([])
-    const [users, setUsers] = useState([])
+  const confirmApproveDialog = useRef(null)
+  const confirmDenyDialog = useRef(null)
 
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    const [report, setReport] =useState({})
-    const [approveDescription, setApproveDescription] = useState("")
-    useEffect(() => {
-        async function getData() {
-            const reports = await getReports();
-            setReports(reports)
-            const publications = await getPublications();
-            setPublications(publications)
-            const users = await getUsers();
-            setUsers(users)
-        }
-        getData();
-    }, []);
+  const [reports, setReports] = useState([])
+  const [publications, setPublications] = useState([])
+  const [users, setUsers] = useState([])
+  const [report, setReport] = useState({})
+  const [approveDescription, setApproveDescription] = useState('')
 
-    async function approveReport() {
+  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'))
 
-        if (!approveDescription || approveDescription.trim() === "") {
-            alert("Moderator description is empty");
-            return
-        }
+  useEffect(() => {
+    async function getData() {
+      setReports(await getReports())
+      setPublications(await getPublications())
+      setUsers(await getUsers())
+    }
+    getData()
+  }, [])
 
-        if(reportGrade === 1){
-            const reportUpdate = {
-                moderatorDescription: approveDescription,
-                reportGrade: 2,                     
-                moderator: Number(currentUser.id)   
-            };
+  async function approveReport() {
+    if (!approveDescription.trim()) return alert('Description required')
 
-            const reportedPublication = await getPublication(report.reportedPublication)
-            console.log(reportedPublication)
+    if (reportGrade === 1) {
+      const reportedPublication = await getPublication(report.reportedPublication)
 
-            const publicationUpdate = {
-                ...reportedPublication,
-                isHidden: true   
-            }
-            const updatedReport = await updateReport(report.id, reportUpdate);
-            const updatedPublication = await updatePublications(report.reportedPublication, publicationUpdate)
+      await updatePublications(report.reportedPublication, {
+        ...reportedPublication,
+        isHidden: true
+      })
 
-
-            console.log(updatedPublication)
-            console.log(updatedReport)
-        }
-        else if(reportGrade === 2){
-            const reportUpdate = {
-                adminDescription: approveDescription,
-                reportGrade: 3,                     
-                administrator: Number(currentUser.id)   
-            };
-
-            const reporteduser = await getUser(report.reportedUser)
-            const reportedPublication = await getPublication(report.reportedPublication)
-
-            const userUpdate = {
-                ...reporteduser,
-                isBanned: true
-            }
-
-            const publicationUpdate = {
-                ...reportedPublication,
-                isHidden: true   
-            }
-
-            const updatedUser = await updateUsers(report.reportedUser, userUpdate)
-            const updatedPublication = await updatePublications(report.reportedPublication, publicationUpdate)
-            const updatedReport = await updateReport(report.id, reportUpdate);
-
-            console.log(updatedUser)
-            console.log(updatedPublication)
-            console.log(updatedReport)
-        }
-
-        
+      await updateReport(report.id, {
+        moderatorDescription: approveDescription,
+        reportGrade: 2,
+        moderator: Number(currentUser.id)
+      })
     }
 
-    async function denyReport() {
-        if (!approveDescription || approveDescription.trim() === "") {
-            alert("Moderator description is empty");
-            return
-        }
-        console.table(report)
-        if(reportGrade === 1){
-            const reportUpdate = {
-                moderatorDescription: approveDescription,
-                reportGrade: 4,                     
-                moderator: Number(currentUser.id)   
-            };
-            const publicationUpdate = {
-                isHidden: false
-            }
-            const updatedReport = await updateReport(report.id, reportUpdate);
-            const updatedUser = await updatePublications(report.reportedpublication, publicationUpdate)
-            console.log(updatedUser)
-            console.log(updatedReport)
-            
-        }
-        else if(reportGrade === 2){
-            const reportUpdate = {
-                adminDescription: approveDescription,
-                reportGrade: 4,                     
-                administrator: Number(currentUser.id)   
-            };
-            const publicationUpdate = {
-                isHidden: false
-            }
-            const updatedPublication = await updatePublications(report.reportedPublication, publicationUpdate)
-            const updatedReport = await updateReport(report.id, reportUpdate);
+    if (reportGrade === 2) {
+      const reportedUser = await getUser(report.reportedUser)
+      const reportedPublication = await getPublication(report.reportedPublication)
 
+      await updateUsers(report.reportedUser, {
+        ...reportedUser,
+        isBanned: true
+      })
 
-            console.log(updatedPublication)
-            console.log(updatedReport)
-        }
+      await updatePublications(report.reportedPublication, {
+        ...reportedPublication,
+        isHidden: true
+      })
+
+      await updateReport(report.id, {
+        adminDescription: approveDescription,
+        reportGrade: 3,
+        administrator: Number(currentUser.id)
+      })
     }
 
+    confirmApproveDialog.current.close()
+  }
 
+  async function denyReport() {
+    if (!approveDescription.trim()) return alert('Description required')
 
-  const openModalConfirmApproveReport = () => {
-    confirmApproveDialog.current.showModal();
-  };
-  const closeModalConfirmApproveReport = () => {
-    confirmApproveDialog.current.close();
-  };
+    await updatePublications(report.reportedPublication, { isHidden: false })
 
-  const openModaldenyReport = () => {
-    confirmDenyDialog.current.showModal();
-  };
-  const closeModalconfirmDenyReport = () => {
-    confirmDenyDialog.current.close();
-  };
+    await updateReport(report.id, {
+      reportGrade: 4,
+      moderatorDescription: approveDescription,
+      administrator: Number(currentUser.id)
+    })
 
+    confirmDenyDialog.current.close()
+  }
 
   return (
-    <div>
-        <div id="confirmApproveDialogContainer">
-            <dialog ref={confirmApproveDialog} id='confirmApproveDialog'>
-            <p>Why do you approve the report?</p>
-            <textarea
-                value={approveDescription}
-                placeholder="leave a comment"
-                className="commentBox"
-                onChange={(e) => setApproveDescription(e.target.value)}
-            ></textarea>
-                <button className="closeBtn" onClick={closeModalConfirmApproveReport}>x</button>
-                <button onClick={approveReport}>confirm approve</button>
-            </dialog>
-        </div>
+    <div id="reportsPage">
 
-        <div id="confirmDenyDialogContainer">
-            <dialog ref={confirmDenyDialog} id="confirmDenyDialog">
-                <p>Why deny the report?</p>
-                <textarea
-                    value={approveDescription}
-                    placeholder="leave a comment"
-                    className="commentBox"
-                    onChange={(e) => setApproveDescription(e.target.value)}
-                ></textarea>
-                <button onClick={denyReport}>confirm deny</button>
-                <button className="closeBtn" onClick={closeModalconfirmDenyReport}>x</button>
-            </dialog>
+      <dialog ref={confirmApproveDialog} className="confirmDialog">
+        <h3>Approve report</h3>
+        <textarea
+          className="commentBox"
+          placeholder="Leave a comment"
+          value={approveDescription}
+          onChange={e => setApproveDescription(e.target.value)}
+        />
+        <div className="dialogActions">
+          <button className="secondaryBtn" onClick={() => confirmApproveDialog.current.close()}>Cancel</button>
+          <button className="primaryBtn" onClick={approveReport}>Approve</button>
         </div>
+      </dialog>
 
-        <div id="reportsCardsContainer">
-            {reports.filter(report => report.reportGrade === reportGrade).map((report) => { 
-                const reportedUser = users.find(user => user.id == report.reportedUser)
-                const reporterUser = users.find(user => user.id == report.reporterUser)
-                const publication = publications.find(publication => publication.id === report.reportedPublication)
-                return (
-                    <div key={report.id} className='reportCards'>
-                        <h2>{report.problem} Report </h2>
-                        <p>Reported publication of: {reportedUser?.firstName} {reportedUser?.lastName}</p>
-                        <CardsOutputReports publication={publication}  />
-                        <p>Reported by: {reporterUser?.firstName } {reporterUser?.lastName}</p>
-                        <p>{report.userDescription}</p>
-                        <button onClick={() => {openModalConfirmApproveReport(); setReport(report) }}>approve</button>
-                        <button onClick={() => {openModaldenyReport(); setReport(report) }}>deny</button>
-                    </div>
-                );
-            })}
+      <dialog ref={confirmDenyDialog} className="confirmDialog">
+        <h3>Deny report</h3>
+        <textarea
+          className="commentBox"
+          placeholder="Leave a comment"
+          value={approveDescription}
+          onChange={e => setApproveDescription(e.target.value)}
+        />
+        <div className="dialogActions">
+          <button className="secondaryBtn" onClick={() => confirmDenyDialog.current.close()}>Cancel</button>
+          <button className="dangerBtn" onClick={denyReport}>Deny</button>
         </div>
+      </dialog>
+
+      <div id="reportsCardsContainer">
+        {reports
+          .filter(r => r.reportGrade === reportGrade)
+          .map(r => {
+            const reportedUser = users.find(u => u.id === r.reportedUser)
+            const reporterUser = users.find(u => u.id === r.reporterUser)
+            const publication = publications.find(p => p.id === r.reportedPublication)
+
+            return (
+              <div key={r.id} className="reportCard">
+                <h3>{r.problem}</h3>
+                <p className="muted">Reported publication of {reportedUser?.firstName} {reportedUser?.lastName}</p>
+
+                <CardsOutputReports publication={publication} />
+
+                <p className="muted">Reported by {reporterUser?.firstName} {reporterUser?.lastName}</p>
+                <p>{r.userDescription}</p>
+
+                <div className="actions">
+                  <button className="primaryBtn" onClick={() => { setReport(r); confirmApproveDialog.current.showModal() }}>
+                    Approve
+                  </button>
+                  <button className="dangerBtn" onClick={() => { setReport(r); confirmDenyDialog.current.showModal() }}>
+                    Deny
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+      </div>
+
     </div>
   )
 }

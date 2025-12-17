@@ -83,8 +83,10 @@ function UserProfileInformationOutPut({ user }) {
 
         <div id="cardsOutPutContainer">
         <CardsOutPut publicationsType="Adopcion" />
-        <CardsOutPut publicationsType="Lost" />
-        <CardsOutPut publicationsType="Wanted" />
+        {/*
+            <CardsOutPut publicationsType="Lost" />
+            <CardsOutPut publicationsType="Wanted" />
+        */}
         </div>
 
     </div>

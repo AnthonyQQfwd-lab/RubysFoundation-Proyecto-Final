@@ -1,93 +1,109 @@
 html, body {
-    height: 100%;
-    width: 100%;
-    background-color: white
+  margin: 0;
+  padding: 0;
+  background: #0c1423;
+  color: #333;
 }
 
-h1 {
-    color: red;
-    font-size: 100px;
+/* PAGE */
+#reportsPage {
+  min-height: 100dvh;
+  padding: 30px;
+}
+
+/* CARDS CONTAINER */
+#reportsCardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.reportCard {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reportCard h3 {
+  margin: 0;
+}
+
+.muted {
+  font-size: 13px;
+  color: #777;
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* BUTTONS */
+.primaryBtn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.secondaryBtn {
+  background: #e0e0e0;
+  color: #333;         
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  font-weight: 500;
 }
 
 
-#reportsOutPutContainer{
-    display: grid;
-    place-items: center;       
-    height: 100vh;
+.dangerBtn {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
 }
 
-#reportsCardsContainer{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;       
-    justify-content: center; 
+/* DIALOG */
+.confirmDialog {
+  border: none;
+  border-radius: 14px;
+  padding: 20px;
+  max-width: 420px;
+  width: 90%;
 }
 
-#confirmApproveDialog {
-    position: fixed;     
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    padding: 20px;
-    border: none;
-    border-radius: 12px;
+.confirmDialog::backdrop {
+  background: rgba(0,0,0,0.5);
 }
 
-#confirmDenyDialog{
-    position: fixed;     
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    padding: 20px;
-    border: none;
-    border-radius: 12px;
-}
-
-
-
+/* TEXTAREA */
 .commentBox {
-    width: 100%;
-    min-height: 100px;
-    resize: none;
-    overflow: auto;
-    padding: 8px;
-    font-size: 16px;
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
 }
 
-#confirmApproveDialogContainer{
-         
-
+/* DIALOG ACTIONS */
+.dialogActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
-
-#confirmDenyDialog button.closeBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: transparent;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-
-
-#ticketsCardsContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;  
-    align-items: center;      
-    flex-wrap: wrap;          
-    gap: 15px;                
-}
-
-.ticketsCards {
-    width: 200px;          
-    border: 1px solid #000;
-    white-space: normal;    
-    overflow-wrap: break-word;  
-    padding: 10px;           
-    border-radius: 8px;      
-}
-
