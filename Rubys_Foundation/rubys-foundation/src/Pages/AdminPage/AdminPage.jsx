@@ -4,7 +4,6 @@ import NavBar from '../../Components/NavBar'
 function AdminPage() {
   return (
     <div>
-        AdminPage
         <NavBar />
         <ReportsOutput reportGrade={2} />
     </div>
